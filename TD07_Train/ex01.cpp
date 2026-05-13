@@ -4,12 +4,14 @@
 #include "draw_scene.hpp"
 #include "tools/shaders.hpp"
 #include <iostream>
+#include "utilsJson.hpp"
 
 using namespace glbasimac;
 using namespace STP3D;
+using json = nlohmann::json;
 
 /* Window properties */
-static const unsigned int WINDOW_WIDTH = 1200;
+static const unsigned int WINDOW_WIDTH = 800;
 static const unsigned int WINDOW_HEIGHT = 800;
 static const char WINDOW_TITLE[] = "Dino Train";
 static float aspectRatio = 1.0f;
@@ -86,10 +88,16 @@ void onMouseButton(GLFWwindow *window, int button, int action, int /*mods*/)
 	}
 }
 
+
 int main(int /*argc*/, char ** /*argv*/)
 {
+
+
+	read_json();
+
 	/* GLFW initialisation */
-	GLFWwindow *window;
+	GLFWwindow *
+		window;
 	if (!glfwInit())
 		return -1;
 
@@ -129,14 +137,12 @@ int main(int /*argc*/, char ** /*argv*/)
 
 	std::cout << "Engine init" << std::endl;
 
-
 	myEngine.initGL();
 
 	onWindowResized(window, WINDOW_WIDTH, WINDOW_HEIGHT);
 	CHECK_GL;
 
 	initScene();
-
 
 	double elapsedTime{0.0};
 
@@ -149,10 +155,8 @@ int main(int /*argc*/, char ** /*argv*/)
 		/* Render begins here */
 		glClearColor(0.f, 0.0f, 0.2f, 0.0f);
 
-
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glEnable(GL_DEPTH_TEST);
-
 
 		/* Fix camera position */
 		myEngine.mvMatrixStack.loadIdentity();
