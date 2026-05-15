@@ -8,8 +8,12 @@ float dist_zoom{30.0};	 // Distance between origin and viewpoint
 GLBI_Engine myEngine;
 GLBI_Set_Of_Points somePoints(3);
 GLBI_Convex_2D_Shape ground{3};
+GLBI_Convex_2D_Shape ground_debug{3};
 
+MatrixStack modelviewStack;
 IndexedMesh *sphere = NULL;
+IndexedMesh *balast = NULL;
+IndexedMesh *rail = NULL;
 
 void initScene()
 {
@@ -23,29 +27,99 @@ void initScene()
 	ground.initShape(baseCarre);
 	ground.changeNature(GL_TRIANGLE_FAN);
 
-	// Une sphere de rayon 10 (représentée par 16 bandes de 32 triangles)
-	sphere = basicSphere(10.0f, 16, 16);
+	// debug
+	std::vector<float> carreDebug{
+		0.0, 10.0, 0.11,
+		10.0, 10.0, 0.11,
+		10.0, 0.0, 0.11,
+		0.0, 0.0, 0.11};
+
+	ground_debug.initShape(carreDebug);
+	ground_debug.changeNature(GL_TRIANGLE_FAN);
+
+	balast = basicCylinder(1.0f, 1.0f);
+	balast->createVAO();
+
+	rail = basicCube(1.0f);
+	rail->createVAO();
+
+	sphere = basicSphere(1.0f);
 	sphere->createVAO();
 }
 
-void drawFrame()
+const float axe_x{10.0f};
+const float axe_y{10.0f};
+
+const float sx{0.75};
+// a verifier le sr j n'ai pas vu le chiffre donc j'ai mis arbitrairement 0.5
+const float sr{0.5f};
+const float rr{0.5f};
+
+const int POS_X_RAIL1{3};
+const int POS_X_RAIL2{7};
+
+const float rayon_rail_fer = (sr / 2);
+const float rayon_rail_balast = (rr / 2);
+
+void drawBalast()
 {
-	// TO DO
+
+	myEngine.mvMatrixStack.pushMatrix(),
+		myEngine.mvMatrixStack.addHomothety(Vector3D(rayon_rail_balast, axe_y - 4, rayon_rail_balast));
+	myEngine.mvMatrixStack.addTranslation(Vector3D(0, 0, rayon_rail_balast + rr));
+	myEngine.updateMvMatrix();
+	myEngine.setFlatColor(0.549, 0.353, 0.235);
+	balast->draw();
+
+	myEngine.mvMatrixStack.popMatrix();
 }
 
-void drawBase()
+void drawRailFer()
 {
-	// TO DO
+
+	myEngine.mvMatrixStack.pushMatrix(),
+		myEngine.mvMatrixStack.addHomothety(Vector3D(sr / 2, axe_y, sr / 2));
+
+	myEngine.updateMvMatrix();
+	myEngine.setFlatColor(0.749, 0.788, 0.82);
+	rail->draw();
+
+	myEngine.mvMatrixStack.popMatrix();
 }
 
-void drawArm()
+void drawRailDroite()
 {
-	// TO DO
-}
 
-void drawPan()
-{
-	// TO DO
+	// premier
+
+	for (int i = 0; i < 5; ++i)
+	{
+		myEngine.mvMatrixStack.pushMatrix();
+
+		myEngine.mvMatrixStack.addTranslation(Vector3D(sx + i * (2.0f * sx + rr), 2.0f, 0));
+
+		drawBalast();
+
+		myEngine.mvMatrixStack.popMatrix();
+	}
+
+
+
+	// rail fer droite
+	myEngine.mvMatrixStack.pushMatrix();
+	myEngine.mvMatrixStack.addRotation(deg2rad(90), Vector3D(0.0, 0.0, 1.0));
+	// myEngine.mvMatrixStack.addTranslation(Vector3D(POS_X_RAIL1, -axe_y / 2 + sx * 2, rr));
+	myEngine.mvMatrixStack.addTranslation(Vector3D(POS_X_RAIL1, -axe_y / 2 + sx / 4, rr));
+	drawRailFer();
+	myEngine.mvMatrixStack.popMatrix();
+
+	// rail fer gauche
+
+	myEngine.mvMatrixStack.pushMatrix();
+	myEngine.mvMatrixStack.addRotation(deg2rad(90), Vector3D(0.0, 0.0, 1.0));
+	myEngine.mvMatrixStack.addTranslation(Vector3D(POS_X_RAIL2, -axe_y / 2 + sx / 4, rr));
+	drawRailFer();
+	myEngine.mvMatrixStack.popMatrix();
 }
 
 void drawScene()
@@ -56,6 +130,11 @@ void drawScene()
 
 	myEngine.setFlatColor(0.435, 0.812, 0.592);
 	ground.drawShape();
+
+	myEngine.setFlatColor(1, 0.984, 0);
+	ground_debug.drawShape();
 	myEngine.setFlatColor(0.2, 1.0, 0.8);
-	sphere->draw();
+
+	//  drawBalast();
+	drawRailDroite();
 }

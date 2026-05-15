@@ -29,3 +29,9 @@ void drawPan();
 
 void drawScene();
 
+void drawBalast();
+
+
+void drawRailFer();
+
+void drawRailDroite();
