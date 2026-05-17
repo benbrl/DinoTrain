@@ -88,12 +88,25 @@ void onMouseButton(GLFWwindow *window, int button, int action, int /*mods*/)
 	}
 }
 
-
 int main(int /*argc*/, char ** /*argv*/)
 {
 
+	std::string ascii = R"(
+ ____  _               _____          _       
+|  _ \(_)_ __   ___   |_   _| __ __ _(_)_ __  
+| | | | | '_ \ / _ \    | || '__/ _` | | '_ \ 
+| |_| | | | | | (_) |   | || | | (_| | | | | |
+|____/|_|_| |_|\___/    |_||_|  \__,_|_|_| |_|
 
-	read_json();
+  par Benoît Baraille et Jade Riesen
+    )";
+
+	std::cout << ascii << std::endl;
+
+	GridConfig config;
+	config = read_json();
+
+	rail_type_detect(config);
 
 	/* GLFW initialisation */
 	GLFWwindow *
