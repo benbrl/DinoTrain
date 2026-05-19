@@ -26,3 +26,5 @@ void to_json(nlohmann::json &json, const GridConfig &g);
 GridConfig read_json();
 
 void rail_type_detect(GridConfig config);
+
+void drawRailDroite_position(int x, int y);

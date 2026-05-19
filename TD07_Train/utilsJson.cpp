@@ -73,8 +73,11 @@ void rail_type_detect(GridConfig config)
 
     if ((rails[1].x == rails.back().x && rails[1].y != rails.back().y) || (rails[1].y == rails.back().y && rails[1].x != rails.back().x))
     {
-        // drawRailDroite(rails[1].x, rails[1].y);
-        std::cout << "la rail " << 1 << " est droite " << std::endl;
+
+        drawRailDroite_position(rails[1].x, rails[1].y);
+
+        std::cout
+            << "la rail " << 1 << " est droite " << std::endl;
     }
     else
     {
@@ -88,7 +91,8 @@ void rail_type_detect(GridConfig config)
         if ((rails[i].x == rails[i + 2].x && rails[i].y != rails[i + 2].y) || (rails[i].y == rails[i + 2].y && rails[i].x != rails[i + 2].x))
         {
 
-            // drawRailDroite(rails[i + 1].x, rails[i + 1].y);
+            drawRailDroite_position(rails[i + 1].x, rails[i + 1].y);
+
             std::cout << "la rail " << i + 1 << " est droite " << std::endl;
         }
         else

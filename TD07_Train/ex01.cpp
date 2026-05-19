@@ -106,7 +106,9 @@ int main(int /*argc*/, char ** /*argv*/)
 	GridConfig config;
 	config = read_json();
 
-	rail_type_detect(config);
+
+
+	
 
 	/* GLFW initialisation */
 	GLFWwindow *
@@ -183,7 +185,7 @@ int main(int /*argc*/, char ** /*argv*/)
 		myEngine.setViewMatrix(viewMatrix);
 		myEngine.updateMvMatrix();
 
-		drawScene();
+		drawScene(config);
 
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);
