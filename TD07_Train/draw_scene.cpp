@@ -1,4 +1,5 @@
 #include "draw_scene.hpp"
+#include "utilsJson.hpp"
 
 /// Camera parameters
 float angle_theta{45.0}; // Angle between x axis and viewpoint
@@ -245,6 +246,24 @@ void drawRailCourbe()
 }
 
 void drawScene()
+// WIP mettre float/int rotation apres
+void drawRailDroite_position(int x, int y)
+{
+	std::cout << "---------------- position rails ---------------" << std::endl;
+
+	std::cout << x << std::endl;
+	std::cout << y << std::endl;
+
+	myEngine.mvMatrixStack.pushMatrix();
+
+	myEngine.mvMatrixStack.addTranslation(Vector3D(y * 10, x * 10, 0));
+
+	drawRailDroite();
+
+	myEngine.mvMatrixStack.popMatrix();
+}
+
+void drawScene(GridConfig config)
 {
 	glPointSize(10.0);
 
@@ -262,4 +281,12 @@ void drawScene()
 	// drawRailDroite();
 	drawRailCourbe();
 	//drawRailFerCourbe();
+	rail_type_detect(config);
+
+	//  drawBalast();
+	// drawRailDroite();
+	// drawRailDroite_position(0, 1);
+	// drawRailDroite_position(0, 0);
+	// drawRailDroite_position(0, -1);
+	// drawRailDroite_position(0, -2);
 }
