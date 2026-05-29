@@ -35,3 +35,7 @@ void drawBalast();
 void drawRailFer();
 
 void drawRailDroite();
+
+void drawGare();
+
+void drawArbre();

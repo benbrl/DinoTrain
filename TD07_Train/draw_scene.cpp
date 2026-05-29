@@ -1,22 +1,31 @@
 #include "draw_scene.hpp"
 #include "utilsJson.hpp"
 
+
 /// Camera parameters
 float angle_theta{45.0}; // Angle between x axis and viewpoint
 float angle_phy{30.0};	 // Angle between z axis and viewpoint
-float dist_zoom{10.0};	 // Distance between origin and viewpoint
+float dist_zoom{30.0};	 // Distance between origin and viewpoint
 
 GLBI_Engine myEngine;
 GLBI_Set_Of_Points somePoints(3);
 GLBI_Convex_2D_Shape ground{3};
 GLBI_Convex_2D_Shape ground_debug{3};
-GLBI_Convex_2D_Shape RailInt;
+GLBI_Convex_2D_Shape Rail1;
+GLBI_Convex_2D_Shape Rail2;
 GLBI_Convex_2D_Shape carre;
+GLBI_Convex_2D_Shape triangle;
+GLBI_Convex_2D_Shape courbeAvant1{3};
+GLBI_Convex_2D_Shape courbeArriere1{3};
+GLBI_Convex_2D_Shape courbeAvant2{3};
+GLBI_Convex_2D_Shape courbeArriere2{3};
 
 MatrixStack modelviewStack;
 IndexedMesh *sphere = NULL;
 IndexedMesh *balast = NULL;
 IndexedMesh *rail = NULL;
+StandardMesh *cone = NULL;
+StandardMesh *rectangle = NULL;
 
 const float axe_x{10.0f};
 const float axe_y{10.0f};
@@ -63,25 +72,134 @@ void initScene()
 	sphere = basicSphere(1.0f);
 	sphere->createVAO();
 
+	cone = basicCone(1.0f, 1.0f);
+	cone->createVAO();
+
+	rectangle = basicRect(1.0f, 1.0f);
+	rectangle->createVAO();
+
+
 	// Rail courbé 2D
 
-	std::vector<float> railIntPoints;
 	int nbPoints = 100;
 	float angleStep = (M_PI / 2.0f) / nbPoints;
+
+	//courbes du haut et du bas pour rail 1
+	std::vector<float> railIntPoints1;
 
 	for (int i = 0; i <= nbPoints; i++)
 	{
 		float angle = i * angleStep;
 		// intérieur de la bande
-		railIntPoints.push_back((POS_X_RAIL1 - sr / 2) * cos(angle));
-		railIntPoints.push_back((POS_X_RAIL1 - sr / 2) * sin(angle));
+		railIntPoints1.push_back((POS_X_RAIL1 - sr / 2) * cos(angle));
+		railIntPoints1.push_back((POS_X_RAIL1 - sr / 2) * sin(angle));
 
 		// extérieur de la bande
-		railIntPoints.push_back((POS_X_RAIL1 + sr / 2) * cos(angle));
-		railIntPoints.push_back((POS_X_RAIL1 + sr / 2) * sin(angle));
+		railIntPoints1.push_back((POS_X_RAIL1 + sr / 2) * cos(angle));
+		railIntPoints1.push_back((POS_X_RAIL1 + sr / 2) * sin(angle));
 	}
-	RailInt.initShape(railIntPoints);
-	RailInt.changeNature(GL_TRIANGLE_STRIP);
+	Rail1.initShape(railIntPoints1);
+	Rail1.changeNature(GL_TRIANGLE_STRIP);
+
+	//courbes du haut et du bas pour rail 2
+	std::vector<float> railIntPoints2;
+
+	for (int i = 0; i <= nbPoints; i++)
+	{
+		float angle = i * angleStep;
+		// intérieur de la bande
+		railIntPoints2.push_back((POS_X_RAIL2 - sr / 2) * cos(angle));
+		railIntPoints2.push_back((POS_X_RAIL2 - sr / 2) * sin(angle));
+
+		// extérieur de la bande
+		railIntPoints2.push_back((POS_X_RAIL2 + sr / 2) * cos(angle));
+		railIntPoints2.push_back((POS_X_RAIL2 + sr / 2) * sin(angle));
+	}
+	Rail2.initShape(railIntPoints2);
+	Rail2.changeNature(GL_TRIANGLE_STRIP);
+
+	// courbes des côtés 
+
+	//avant 1
+	std::vector<float> CourbeAvantPoints1;
+	for (int i = 0; i <= nbPoints; i++)
+	{
+		float angle = i * angleStep;
+		// dessus de la bande
+		CourbeAvantPoints1.push_back((POS_X_RAIL1 - sr / 2) * cos(angle));
+		CourbeAvantPoints1.push_back((POS_X_RAIL1 - sr / 2) * sin(angle));
+		CourbeAvantPoints1.push_back(0);
+
+
+		// dessous de la bande
+		CourbeAvantPoints1.push_back((POS_X_RAIL1 - sr / 2) * cos(angle));
+		CourbeAvantPoints1.push_back((POS_X_RAIL1 - sr / 2) * sin(angle));
+		CourbeAvantPoints1.push_back(sr);
+	}
+	courbeAvant1.initShape(CourbeAvantPoints1);
+	courbeAvant1.changeNature(GL_TRIANGLE_STRIP);
+
+	//avant 2
+	std::vector<float> CourbeAvantPoints2;
+	for (int i = 0; i <= nbPoints; i++)
+	{
+		float angle = i * angleStep;
+		// dessus de la bande
+		CourbeAvantPoints2.push_back((POS_X_RAIL2 - sr / 2) * cos(angle));
+		CourbeAvantPoints2.push_back((POS_X_RAIL2 - sr / 2) * sin(angle));
+		CourbeAvantPoints2.push_back(0);
+
+
+		// dessous de la bande
+		CourbeAvantPoints2.push_back((POS_X_RAIL2 - sr / 2) * cos(angle));
+		CourbeAvantPoints2.push_back((POS_X_RAIL2 - sr / 2) * sin(angle));
+		CourbeAvantPoints2.push_back(sr);
+	}
+	courbeAvant2.initShape(CourbeAvantPoints2);
+	courbeAvant2.changeNature(GL_TRIANGLE_STRIP);
+
+	//arrière 1 
+	std::vector<float> CourbeArrierePoints1;
+	for (int i = 0; i <= nbPoints; i++)
+	{
+		float angle = i * angleStep;
+		// dessus de la bande
+		CourbeArrierePoints1.push_back((POS_X_RAIL1 + sr / 2) * cos(angle));
+		CourbeArrierePoints1.push_back((POS_X_RAIL1 + sr / 2) * sin(angle));
+		CourbeArrierePoints1.push_back(0);
+
+
+		// dessous de la bande
+		CourbeArrierePoints1.push_back((POS_X_RAIL1 + sr / 2) * cos(angle));
+		CourbeArrierePoints1.push_back((POS_X_RAIL1 + sr / 2) * sin(angle));
+		CourbeArrierePoints1.push_back(sr);
+	}
+	courbeArriere1.initShape(CourbeArrierePoints1);
+	courbeArriere1.changeNature(GL_TRIANGLE_STRIP);
+
+		//arrière 1 
+	std::vector<float> CourbeArrierePoints2;
+	for (int i = 0; i <= nbPoints; i++)
+	{
+		float angle = i * angleStep;
+		// dessus de la bande
+		CourbeArrierePoints2.push_back((POS_X_RAIL2 + sr / 2) * cos(angle));
+		CourbeArrierePoints2.push_back((POS_X_RAIL2 + sr / 2) * sin(angle));
+		CourbeArrierePoints2.push_back(0);
+
+
+		// dessous de la bande
+		CourbeArrierePoints2.push_back((POS_X_RAIL2 + sr / 2) * cos(angle));
+		CourbeArrierePoints2.push_back((POS_X_RAIL2 + sr / 2) * sin(angle));
+		CourbeArrierePoints2.push_back(sr);
+	}
+	courbeArriere2.initShape(CourbeArrierePoints2);
+	courbeArriere2.changeNature(GL_TRIANGLE_STRIP);
+
+
+
+
+
 
 	// carré
 
@@ -89,13 +207,20 @@ void initScene()
 
 	carre.initShape(carre_points);
 	carre.changeNature(GL_TRIANGLE_FAN);
+
+	// triangle
+
+	std::vector<float> triangle_points{0.0f, 0.0f, 1.0f, 0.0f, 0.5f, 0.5f};
+
+	triangle.initShape(triangle_points);
+	triangle.changeNature(GL_TRIANGLE_FAN);
 }
 
 void drawBalast()
 {
 
 	myEngine.mvMatrixStack.pushMatrix(),
-		myEngine.mvMatrixStack.addHomothety(Vector3D(rayon_rail_balast, axe_y - 4, rayon_rail_balast));
+	myEngine.mvMatrixStack.addHomothety(Vector3D(rayon_rail_balast, axe_y - 4, rayon_rail_balast));
 	myEngine.mvMatrixStack.addTranslation(Vector3D(0, 0, rayon_rail_balast + rr));
 	myEngine.updateMvMatrix();
 	myEngine.setFlatColor(0.549, 0.353, 0.235);
@@ -108,8 +233,7 @@ void drawRailFer()
 {
 
 	myEngine.mvMatrixStack.pushMatrix(),
-		myEngine.mvMatrixStack.addHomothety(Vector3D(sr / 2, axe_y, sr / 2));
-
+	myEngine.mvMatrixStack.addHomothety(Vector3D(sr / 2, axe_y, sr / 2));
 	myEngine.updateMvMatrix();
 	myEngine.setFlatColor(0.749, 0.788, 0.82);
 	rail->draw();
@@ -126,20 +250,22 @@ void drawRailFerCourbe()
 	// Dessous
 	myEngine.mvMatrixStack.pushMatrix();
 	// myEngine.mvMatrixStack.addRotation(M_PI / 2.0f, z_axe);
-	Vector3D trans3{0.0f, 0.0f, rr};
+	Vector3D trans3{0.0f, 0.0f, sr};
 	myEngine.mvMatrixStack.addTranslation(trans3);
 	myEngine.setFlatColor(0.749, 0.788, 0.82);
 	myEngine.updateMvMatrix();
-	RailInt.drawShape();
+	Rail1.drawShape();
+	Rail2.drawShape();
 
 	// Dessus
 	Vector3D trans4{0.0f, 0.0f, sr};
 	myEngine.mvMatrixStack.addTranslation(trans4);
 	myEngine.updateMvMatrix();
-	RailInt.drawShape();
+	Rail1.drawShape();
+	Rail2.drawShape();
 	myEngine.mvMatrixStack.popMatrix();
 
-	// carré x
+	// carré 1 x
 	myEngine.mvMatrixStack.pushMatrix();
 	myEngine.mvMatrixStack.addTranslation(Vector3D(0.0f, POS_X_RAIL1 - sr / 2.0f, rr));
 	myEngine.mvMatrixStack.addRotation(-M_PI / 2.0f, y_axe);
@@ -148,7 +274,16 @@ void drawRailFerCourbe()
 	carre.drawShape();
 	myEngine.mvMatrixStack.popMatrix();
 
-	// carré y
+	// carré 2 x
+	myEngine.mvMatrixStack.pushMatrix();
+	myEngine.mvMatrixStack.addTranslation(Vector3D(0.0f, POS_X_RAIL2 - sr / 2.0f, rr));
+	myEngine.mvMatrixStack.addRotation(-M_PI / 2.0f, y_axe);
+	myEngine.mvMatrixStack.addHomothety(Vector3D(sr, sr, 1.0f));
+	myEngine.updateMvMatrix();
+	carre.drawShape();
+	myEngine.mvMatrixStack.popMatrix();
+
+	// carré 1 y
 	myEngine.mvMatrixStack.pushMatrix();
 	myEngine.mvMatrixStack.addTranslation(Vector3D(POS_X_RAIL1 - sr / 2.0f, 0.0f, 2 * rr));
 	myEngine.mvMatrixStack.addRotation(-M_PI / 2.0f, x_axe);
@@ -157,26 +292,24 @@ void drawRailFerCourbe()
 	carre.drawShape();
 	myEngine.mvMatrixStack.popMatrix();
 
+	// carré 2 y
+	myEngine.mvMatrixStack.pushMatrix();
+	myEngine.mvMatrixStack.addTranslation(Vector3D(POS_X_RAIL2 - sr / 2.0f, 0.0f, 2 * rr));
+	myEngine.mvMatrixStack.addRotation(-M_PI / 2.0f, x_axe);
+	myEngine.mvMatrixStack.addHomothety(Vector3D(sr, sr, 1.0f));
+	myEngine.updateMvMatrix();
+	carre.drawShape();
+	myEngine.mvMatrixStack.popMatrix();
+
 	// milieu
 	myEngine.mvMatrixStack.pushMatrix();
-	myEngine.mvMatrixStack.addTranslation(Vector3D(0, 0, sr));
-
-	int nbPoints = 100;
-	float angleStep = (M_PI / 2.0f) / nbPoints;
-
-	for (int i = 0; i <= nbPoints; i++)
-	{
-		float angle = i * angleStep;
-		myEngine.mvMatrixStack.pushMatrix();
-		myEngine.mvMatrixStack.addTranslation(Vector3D((POS_X_RAIL1 - sr / 2) * cos(angle), (POS_X_RAIL1 - sr / 2) * sin(angle), 0.0f));
-		// myEngine.mvMatrixStack.addRotation(angle+M_PI/2.0f, z_axe);	// pour faire forme en 3D
-		myEngine.mvMatrixStack.addRotation(angle, z_axe);
-		myEngine.mvMatrixStack.addRotation(-M_PI / 2.0f, y_axe);
-		myEngine.mvMatrixStack.addHomothety(Vector3D(sr, sr, 1.0f));
-		myEngine.updateMvMatrix();
-		carre.drawShape();
-		myEngine.mvMatrixStack.popMatrix();
-	}
+	myEngine.mvMatrixStack.addTranslation(Vector3D(0,0,sr));
+	myEngine.updateMvMatrix();
+	courbeAvant1.drawShape();
+	courbeArriere1.drawShape();
+	courbeAvant2.drawShape();
+	courbeArriere2.drawShape();
+	myEngine.mvMatrixStack.popMatrix();
 
 	myEngine.mvMatrixStack.popMatrix();
 
@@ -245,7 +378,9 @@ void drawRailCourbe()
 	myEngine.mvMatrixStack.popMatrix();
 }
 
-void drawScene()
+
+
+//void drawScene()
 // WIP mettre float/int rotation apres
 void drawRailDroite_position(int x, int y)
 {
@@ -262,6 +397,7 @@ void drawRailDroite_position(int x, int y)
 
 	myEngine.mvMatrixStack.popMatrix();
 }
+
 
 void drawScene(GridConfig config)
 {
@@ -281,9 +417,10 @@ void drawScene(GridConfig config)
 	// drawRailDroite();
 	drawRailCourbe();
 	//drawRailFerCourbe();
-	rail_type_detect(config);
-
-	//  drawBalast();
+	//rail_type_detect(config);
+	//drawGare();
+	// drawArbre();
+	// drawBalast();
 	// drawRailDroite();
 	// drawRailDroite_position(0, 1);
 	// drawRailDroite_position(0, 0);
