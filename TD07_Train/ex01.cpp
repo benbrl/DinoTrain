@@ -71,15 +71,6 @@ void onKey(GLFWwindow *window, int key, int /*scancode*/, int action, int /*mods
 	case GLFW_KEY_RIGHT:
 		angle_theta -= 1.0;
 		break;
-
-	case GLFW_KEY_R:
-		//> EXO 3
-		//< FIN EXO 3
-		break;
-	case GLFW_KEY_T:
-		//> EXO 3
-		//< FIN EXO 3
-		break;
 	default:
 		std::cerr << "Touche non gérée " << key << std::endl;
 	}
@@ -112,10 +103,6 @@ int main(int /*argc*/, char ** /*argv*/)
 
 	GridConfig config;
 	config = read_json();
-
-
-
-	
 
 	/* GLFW initialisation */
 	GLFWwindow *
