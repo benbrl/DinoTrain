@@ -3,6 +3,7 @@
 #include "draw_train.hpp"
 #include "draw_rail_droite.hpp"
 #include "draw_rail_courbe.hpp"
+#include "draw_dino.hpp"
 
 /// Camera parameters
 float angle_theta{45.0}; // Angle between x axis and viewpoint
