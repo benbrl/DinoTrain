@@ -1,5 +1,6 @@
 #include "draw_scene.hpp"
 #include "utilsJson.hpp"
+#include "draw_train.hpp"
 #include "draw_rail_droite.hpp"
 #include "draw_rail_courbe.hpp"
 
