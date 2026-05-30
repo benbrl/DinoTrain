@@ -62,7 +62,7 @@ GridConfig read_json()
 
 void rail_type_detect(GridConfig config)
 {
-    std::cout << "-------------- debug config --------------" << std::endl;
+    // std::cout << "-------------- debug config --------------" << std::endl;
     // debug
 
     std::vector<Position> rails = config.path;
@@ -74,18 +74,20 @@ void rail_type_detect(GridConfig config)
     if ((rails[1].x == rails.back().x && rails[1].y != rails.back().y) || (rails[1].y == rails.back().y && rails[1].x != rails.back().x))
     {
 
-        drawRailDroite_position(rails[1].x, rails[1].y);
+        drawRailDroite_position(rails[0].x, rails[0].y);
 
-        std::cout
-            << "la rail " << 1 << " est droite " << std::endl;
+        // std::cout
+        //     << "la rail " << 1 << " est droite " << std::endl;
     }
     else
     {
+
+        drawRailCourbe_position(rails[0].x, rails[0].y);
         // drawRailCourbe(rails[1].x, rails[1].y);
-        std::cout << "la rail " << 1 << " est courbe" << std::endl;
+        // std::cout << "la rail " << 1 << " est courbe" << std::endl;
     }
 
-    for (size_t i = 0; i < rails.size(); i++)
+    for (size_t i = 0; i < rails.size() - 2; i++)
     {
 
         if ((rails[i].x == rails[i + 2].x && rails[i].y != rails[i + 2].y) || (rails[i].y == rails[i + 2].y && rails[i].x != rails[i + 2].x))
@@ -93,14 +95,24 @@ void rail_type_detect(GridConfig config)
 
             drawRailDroite_position(rails[i + 1].x, rails[i + 1].y);
 
-            std::cout << "la rail " << i + 1 << " est droite " << std::endl;
+            // std::cout << "la rail " << i + 1 << " est droite " << std::endl;
         }
         else
         {
             // drawRailCourbe(rails[i + 1].x, rails[i + 1].y);
-            std::cout << "la rail " << i + 1 << " est courbe" << std::endl;
+            drawRailCourbe_position(rails[i + 1].x, rails[i + 1].y);
+            // std::cout << "la rail " << i + 1 << " est courbe" << std::endl;
         }
 
         // a finir car la ça sort du si c'est la fin du tableau prendre le premeir element
+    }
+
+    if ((rails[rails.size() - 2].x == rails[0].x && rails[rails.size() - 2].y != rails[0].y) || (rails[rails.size() - 2].y == rails[0].y && rails[rails.size() - 2].x != rails[0].x))
+    {
+        drawRailDroite_position(rails.back().x, rails.back().y);
+    }
+    else
+    {
+        drawRailCourbe_position(rails.back().x, rails.back().y);
     }
 }

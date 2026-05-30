@@ -279,14 +279,13 @@ void drawScene(GridConfig config)
 	// drawRailFer();
 	// drawBalast();
 	// drawRailDroite();
-	drawRailCourbe();
-	//drawRailFerCourbe();
-	rail_type_detect(config);
-
-	//  drawBalast();
-	// drawRailDroite();
+	// drawRailCourbe();
+	// drawRailFerCourbe();
 	// drawRailDroite_position(0, 1);
-	// drawRailDroite_position(0, 0);
-	// drawRailDroite_position(0, -1);
-	// drawRailDroite_position(0, -2);
+
+	// drawTrain();
+
+	//  moteur();
+	rail_type_detect(config);
+	// draw_dino();
 }

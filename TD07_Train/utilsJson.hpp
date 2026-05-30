@@ -28,3 +28,5 @@ GridConfig read_json();
 void rail_type_detect(GridConfig config);
 
 void drawRailDroite_position(int x, int y);
+
+void drawRailCourbe_position(int x, int y);
