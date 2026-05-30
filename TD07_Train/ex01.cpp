@@ -51,7 +51,14 @@ void onKey(GLFWwindow *window, int key, int /*scancode*/, int action, int /*mods
 	case GLFW_KEY_P:
 		if (is_pressed)
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
+	case GLFW_KEY_R:
+		if (is_pressed)
+			dist_zoom += 10;
+		break;
+	case GLFW_KEY_T:
+		if (is_pressed)
+			dist_zoom -= 10;
+		break;
 	case GLFW_KEY_UP:
 		angle_phy += 1.0;
 		break;
