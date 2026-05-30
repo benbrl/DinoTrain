@@ -57,6 +57,37 @@ void initScene()
 	ground.initShape(baseCarre);
 	ground.changeNature(GL_TRIANGLE_FAN);
 
+	std::vector<float> gridPoints;
+	std::vector<float> gridColor;
+	for (int i = 0; i <= 10; ++i)
+	{
+		// Parallèles à l'axe x
+		gridPoints.push_back(-10 * 10 / 2.0f);
+		gridPoints.push_back(-10 * 10 / 2.0f +
+							 i * 10);
+		gridPoints.push_back(0.1f);
+		gridPoints.push_back(10 * 10 / 2.0f);
+		gridPoints.push_back(-10 * 10 / 2.0f +
+							 i * 10);
+		gridPoints.push_back(0.1f);
+
+		// Parallèles à l'axe y
+		gridPoints.push_back(-10 * 10 / 2.0f +
+							 i * 10);
+		gridPoints.push_back(-10 * 10 / 2.0f);
+		gridPoints.push_back(0.1f);
+		gridPoints.push_back(-10 * 10 / 2.0f +
+							 i * 10);
+		gridPoints.push_back(10 * 10 / 2.0f);
+		gridPoints.push_back(0.1f);
+		for (unsigned int j = 0; j < 12; ++j)
+		{
+			gridColor.push_back(0.0f);
+		}
+	}
+	grid_pts.initSet(gridPoints, gridColor);
+	grid_pts.changeNature(GL_LINES);
+
 	// debug
 	std::vector<float> carreDebug{
 		0.0, 10.0, 0.11,
@@ -290,6 +321,7 @@ void drawRailDroite_position(int x, int y)
 void drawScene(GridConfig config)
 {
 	glPointSize(10.0);
+	grid_pts.drawSet();
 
 	somePoints.drawSet();
 
