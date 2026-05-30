@@ -1,5 +1,6 @@
 #include "draw_scene.hpp"
 #include "utilsJson.hpp"
+#include "draw_rail_droite.hpp"
 
 /// Camera parameters
 float angle_theta{45.0}; // Angle between x axis and viewpoint
