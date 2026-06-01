@@ -42,3 +42,13 @@ extern Vector3D x_axe;
 void initScene();
 
 void drawScene(GridConfig config);
+
+void drawBalast();
+
+void drawRailFer();
+
+void drawRailDroite();
+
+void drawGare();
+
+void drawArbre();

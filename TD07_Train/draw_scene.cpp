@@ -5,6 +5,7 @@
 #include "draw_rail_courbe.hpp"
 #include "draw_dino.hpp"
 
+
 /// Camera parameters
 float angle_theta{45.0}; // Angle between x axis and viewpoint
 float angle_phy{30.0};	 // Angle between z axis and viewpoint
@@ -14,20 +15,20 @@ GLBI_Engine myEngine;
 GLBI_Set_Of_Points somePoints(3);
 GLBI_Convex_2D_Shape ground{3};
 GLBI_Convex_2D_Shape ground_debug{3};
-GLBI_Convex_2D_Shape RailInt;
+GLBI_Convex_2D_Shape Rail1;
+GLBI_Convex_2D_Shape Rail2;
 GLBI_Convex_2D_Shape carre;
+GLBI_Convex_2D_Shape triangle;
+GLBI_Convex_2D_Shape courbeAvant1{3};
+GLBI_Convex_2D_Shape courbeArriere1{3};
+GLBI_Convex_2D_Shape courbeAvant2{3};
+GLBI_Convex_2D_Shape courbeArriere2{3};
 
 IndexedMesh *sphere = NULL;
 IndexedMesh *balast = NULL;
 IndexedMesh *rail = NULL;
-IndexedMesh *cercle = NULL;
-IndexedMesh *cube = NULL;
-IndexedMesh *cylindre = NULL;
 StandardMesh *cone = NULL;
-
-MatrixStack modelviewStack;
-
-GLBI_Set_Of_Points grid_pts(3);
+StandardMesh *rectangle = NULL;
 
 const float axe_x{10.0f};
 const float axe_y{10.0f};
@@ -105,36 +106,134 @@ void initScene()
 	sphere = basicSphere(1.0f);
 	sphere->createVAO();
 
-	cercle = basicSphere(1.0f, 64, 64);
-	cercle->createVAO();
-
 	cone = basicCone(1.0f, 1.0f);
 	cone->createVAO();
 
-	cube = basicCube(1.0f);
-	cube->createVAO();
+	rectangle = basicRect(1.0f, 1.0f);
+	rectangle->createVAO();
+
+
 	// Rail courbé 2D
 
-	cylindre = basicCylinder(1.0f, 1.0f, 16, 4);
-	cylindre->createVAO();
-
-	std::vector<float> railIntPoints;
 	int nbPoints = 100;
 	float angleStep = (M_PI / 2.0f) / nbPoints;
+
+	//courbes du haut et du bas pour rail 1
+	std::vector<float> railIntPoints1;
 
 	for (int i = 0; i <= nbPoints; i++)
 	{
 		float angle = i * angleStep;
 		// intérieur de la bande
-		railIntPoints.push_back((POS_X_RAIL1 - sr / 2) * cos(angle));
-		railIntPoints.push_back((POS_X_RAIL1 - sr / 2) * sin(angle));
+		railIntPoints1.push_back((POS_X_RAIL1 - sr / 2) * cos(angle));
+		railIntPoints1.push_back((POS_X_RAIL1 - sr / 2) * sin(angle));
 
 		// extérieur de la bande
-		railIntPoints.push_back((POS_X_RAIL1 + sr / 2) * cos(angle));
-		railIntPoints.push_back((POS_X_RAIL1 + sr / 2) * sin(angle));
+		railIntPoints1.push_back((POS_X_RAIL1 + sr / 2) * cos(angle));
+		railIntPoints1.push_back((POS_X_RAIL1 + sr / 2) * sin(angle));
 	}
-	RailInt.initShape(railIntPoints);
-	RailInt.changeNature(GL_TRIANGLE_STRIP);
+	Rail1.initShape(railIntPoints1);
+	Rail1.changeNature(GL_TRIANGLE_STRIP);
+
+	//courbes du haut et du bas pour rail 2
+	std::vector<float> railIntPoints2;
+
+	for (int i = 0; i <= nbPoints; i++)
+	{
+		float angle = i * angleStep;
+		// intérieur de la bande
+		railIntPoints2.push_back((POS_X_RAIL2 - sr / 2) * cos(angle));
+		railIntPoints2.push_back((POS_X_RAIL2 - sr / 2) * sin(angle));
+
+		// extérieur de la bande
+		railIntPoints2.push_back((POS_X_RAIL2 + sr / 2) * cos(angle));
+		railIntPoints2.push_back((POS_X_RAIL2 + sr / 2) * sin(angle));
+	}
+	Rail2.initShape(railIntPoints2);
+	Rail2.changeNature(GL_TRIANGLE_STRIP);
+
+	// courbes des côtés 
+
+	//avant 1
+	std::vector<float> CourbeAvantPoints1;
+	for (int i = 0; i <= nbPoints; i++)
+	{
+		float angle = i * angleStep;
+		// dessus de la bande
+		CourbeAvantPoints1.push_back((POS_X_RAIL1 - sr / 2) * cos(angle));
+		CourbeAvantPoints1.push_back((POS_X_RAIL1 - sr / 2) * sin(angle));
+		CourbeAvantPoints1.push_back(0);
+
+
+		// dessous de la bande
+		CourbeAvantPoints1.push_back((POS_X_RAIL1 - sr / 2) * cos(angle));
+		CourbeAvantPoints1.push_back((POS_X_RAIL1 - sr / 2) * sin(angle));
+		CourbeAvantPoints1.push_back(sr);
+	}
+	courbeAvant1.initShape(CourbeAvantPoints1);
+	courbeAvant1.changeNature(GL_TRIANGLE_STRIP);
+
+	//avant 2
+	std::vector<float> CourbeAvantPoints2;
+	for (int i = 0; i <= nbPoints; i++)
+	{
+		float angle = i * angleStep;
+		// dessus de la bande
+		CourbeAvantPoints2.push_back((POS_X_RAIL2 - sr / 2) * cos(angle));
+		CourbeAvantPoints2.push_back((POS_X_RAIL2 - sr / 2) * sin(angle));
+		CourbeAvantPoints2.push_back(0);
+
+
+		// dessous de la bande
+		CourbeAvantPoints2.push_back((POS_X_RAIL2 - sr / 2) * cos(angle));
+		CourbeAvantPoints2.push_back((POS_X_RAIL2 - sr / 2) * sin(angle));
+		CourbeAvantPoints2.push_back(sr);
+	}
+	courbeAvant2.initShape(CourbeAvantPoints2);
+	courbeAvant2.changeNature(GL_TRIANGLE_STRIP);
+
+	//arrière 1 
+	std::vector<float> CourbeArrierePoints1;
+	for (int i = 0; i <= nbPoints; i++)
+	{
+		float angle = i * angleStep;
+		// dessus de la bande
+		CourbeArrierePoints1.push_back((POS_X_RAIL1 + sr / 2) * cos(angle));
+		CourbeArrierePoints1.push_back((POS_X_RAIL1 + sr / 2) * sin(angle));
+		CourbeArrierePoints1.push_back(0);
+
+
+		// dessous de la bande
+		CourbeArrierePoints1.push_back((POS_X_RAIL1 + sr / 2) * cos(angle));
+		CourbeArrierePoints1.push_back((POS_X_RAIL1 + sr / 2) * sin(angle));
+		CourbeArrierePoints1.push_back(sr);
+	}
+	courbeArriere1.initShape(CourbeArrierePoints1);
+	courbeArriere1.changeNature(GL_TRIANGLE_STRIP);
+
+		//arrière 1 
+	std::vector<float> CourbeArrierePoints2;
+	for (int i = 0; i <= nbPoints; i++)
+	{
+		float angle = i * angleStep;
+		// dessus de la bande
+		CourbeArrierePoints2.push_back((POS_X_RAIL2 + sr / 2) * cos(angle));
+		CourbeArrierePoints2.push_back((POS_X_RAIL2 + sr / 2) * sin(angle));
+		CourbeArrierePoints2.push_back(0);
+
+
+		// dessous de la bande
+		CourbeArrierePoints2.push_back((POS_X_RAIL2 + sr / 2) * cos(angle));
+		CourbeArrierePoints2.push_back((POS_X_RAIL2 + sr / 2) * sin(angle));
+		CourbeArrierePoints2.push_back(sr);
+	}
+	courbeArriere2.initShape(CourbeArrierePoints2);
+	courbeArriere2.changeNature(GL_TRIANGLE_STRIP);
+
+
+
+
+
 
 	// carré
 
@@ -142,6 +241,13 @@ void initScene()
 
 	carre.initShape(carre_points);
 	carre.changeNature(GL_TRIANGLE_FAN);
+
+	// triangle
+
+	std::vector<float> triangle_points{0.0f, 0.0f, 1.0f, 0.0f, 0.5f, 0.5f};
+
+	triangle.initShape(triangle_points);
+	triangle.changeNature(GL_TRIANGLE_FAN);
 }
 
 void drawScene(GridConfig config)
@@ -161,8 +267,13 @@ void drawScene(GridConfig config)
 	// drawRailFer();
 	// drawBalast();
 	// drawRailDroite();
-	// drawRailCourbe();
-	// drawRailFerCourbe();
+  //	drawRailCourbe();
+	//drawRailFerCourbe();
+	//rail_type_detect(config);
+	//drawGare();
+	// drawArbre();
+	// drawBalast();
+	// drawRailDroite();
 	// drawRailDroite_position(0, 1);
 
 	// drawTrain();
