@@ -35,6 +35,15 @@ extern IndexedMesh *cube;
 extern IndexedMesh *cylindre;
 extern StandardMesh *cone;
 
+extern GLBI_Convex_2D_Shape Rail1;
+extern GLBI_Convex_2D_Shape Rail2;
+extern GLBI_Convex_2D_Shape carre;
+extern GLBI_Convex_2D_Shape triangle;
+extern GLBI_Convex_2D_Shape courbeAvant1;
+extern GLBI_Convex_2D_Shape courbeArriere1;
+extern GLBI_Convex_2D_Shape courbeAvant2;
+extern GLBI_Convex_2D_Shape courbeArriere2;
+
 extern Vector3D z_axe;
 extern Vector3D y_axe;
 extern Vector3D x_axe;

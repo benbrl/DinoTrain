@@ -83,8 +83,7 @@ void rail_type_detect(GridConfig config)
     {
 
         drawRailCourbe_position(rails[0].x, rails[0].y);
-        // drawRailCourbe(rails[1].x, rails[1].y);
-        // std::cout << "la rail " << 1 << " est courbe" << std::endl;
+   
     }
 
     for (size_t i = 0; i < rails.size() - 2; i++)

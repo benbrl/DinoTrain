@@ -1,6 +1,5 @@
 #include "draw_rail_courbe.hpp"
 
-
 extern const float sr;
 extern const float rr;
 extern const int POS_X_RAIL1;
@@ -60,20 +59,22 @@ void drawRailFerCourbe()
     // Dessous
     myEngine.mvMatrixStack.pushMatrix();
     // myEngine.mvMatrixStack.addRotation(M_PI / 2.0f, z_axe);
-    Vector3D trans3{0.0f, 0.0f, rr};
+    Vector3D trans3{0.0f, 0.0f, sr};
     myEngine.mvMatrixStack.addTranslation(trans3);
     myEngine.setFlatColor(0.749, 0.788, 0.82);
     myEngine.updateMvMatrix();
-    RailInt.drawShape();
+    Rail1.drawShape();
+    Rail2.drawShape();
 
     // Dessus
     Vector3D trans4{0.0f, 0.0f, sr};
     myEngine.mvMatrixStack.addTranslation(trans4);
     myEngine.updateMvMatrix();
-    RailInt.drawShape();
+    Rail1.drawShape();
+    Rail2.drawShape();
     myEngine.mvMatrixStack.popMatrix();
 
-    // carré x
+    // carré 1 x
     myEngine.mvMatrixStack.pushMatrix();
     myEngine.mvMatrixStack.addTranslation(Vector3D(0.0f, POS_X_RAIL1 - sr / 2.0f, rr));
     myEngine.mvMatrixStack.addRotation(-M_PI / 2.0f, y_axe);
@@ -82,9 +83,27 @@ void drawRailFerCourbe()
     carre.drawShape();
     myEngine.mvMatrixStack.popMatrix();
 
-    // carré y
+    // carré 2 x
+    myEngine.mvMatrixStack.pushMatrix();
+    myEngine.mvMatrixStack.addTranslation(Vector3D(0.0f, POS_X_RAIL2 - sr / 2.0f, rr));
+    myEngine.mvMatrixStack.addRotation(-M_PI / 2.0f, y_axe);
+    myEngine.mvMatrixStack.addHomothety(Vector3D(sr, sr, 1.0f));
+    myEngine.updateMvMatrix();
+    carre.drawShape();
+    myEngine.mvMatrixStack.popMatrix();
+
+    // carré 1 y
     myEngine.mvMatrixStack.pushMatrix();
     myEngine.mvMatrixStack.addTranslation(Vector3D(POS_X_RAIL1 - sr / 2.0f, 0.0f, 2 * rr));
+    myEngine.mvMatrixStack.addRotation(-M_PI / 2.0f, x_axe);
+    myEngine.mvMatrixStack.addHomothety(Vector3D(sr, sr, 1.0f));
+    myEngine.updateMvMatrix();
+    carre.drawShape();
+    myEngine.mvMatrixStack.popMatrix();
+
+    // carré 2 y
+    myEngine.mvMatrixStack.pushMatrix();
+    myEngine.mvMatrixStack.addTranslation(Vector3D(POS_X_RAIL2 - sr / 2.0f, 0.0f, 2 * rr));
     myEngine.mvMatrixStack.addRotation(-M_PI / 2.0f, x_axe);
     myEngine.mvMatrixStack.addHomothety(Vector3D(sr, sr, 1.0f));
     myEngine.updateMvMatrix();
@@ -94,24 +113,12 @@ void drawRailFerCourbe()
     // milieu
     myEngine.mvMatrixStack.pushMatrix();
     myEngine.mvMatrixStack.addTranslation(Vector3D(0, 0, sr));
-
-    int nbPoints = 100;
-    float angleStep = (M_PI / 2.0f) / nbPoints;
-
-    for (int i = 0; i <= nbPoints; i++)
-    {
-        float angle = i * angleStep;
-        myEngine.mvMatrixStack.pushMatrix();
-        myEngine.mvMatrixStack.addTranslation(Vector3D((POS_X_RAIL1 - sr / 2) * cos(angle), (POS_X_RAIL1 - sr / 2) * sin(angle), 0.0f));
-        // myEngine.mvMatrixStack.addRotation(angle+M_PI/2.0f, z_axe);	// pour faire forme en 3D
-        myEngine.mvMatrixStack.addRotation(angle, z_axe);
-        myEngine.mvMatrixStack.addRotation(-M_PI / 2.0f, y_axe);
-        myEngine.mvMatrixStack.addHomothety(Vector3D(sr, sr, 1.0f));
-        myEngine.updateMvMatrix();
-        carre.drawShape();
-        myEngine.mvMatrixStack.popMatrix();
-    }
+    myEngine.updateMvMatrix();
+    courbeAvant1.drawShape();
+    courbeArriere1.drawShape();
+    courbeAvant2.drawShape();
+    courbeArriere2.drawShape();
+    myEngine.mvMatrixStack.popMatrix();
 
     myEngine.mvMatrixStack.popMatrix();
-    myEngine.updateMvMatrix();
 }
