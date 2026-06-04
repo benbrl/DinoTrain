@@ -8,3 +8,4 @@
 
 
 void drawGare();
+void drawGare_position(Position position);

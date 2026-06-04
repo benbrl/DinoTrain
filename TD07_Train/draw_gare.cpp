@@ -74,10 +74,15 @@ void drawGare(){
 	myEngine.mvMatrixStack.addTranslation(Vector3D(0,-dim_gare, d));
 	//myEngine.mvMatrixStack.addHomothety(Vector3D(1, 1, dim_gare));
 	float dim{};
-	dim = sqrt(pow(d/sin(angle),2) - pow(d,2));
-	drawToit(dim_gare,angle);
+
+void drawGare_position(Position position)
+{
+
 	myEngine.mvMatrixStack.popMatrix();
-	
+	myEngine.mvMatrixStack.pushMatrix();
+	myEngine.mvMatrixStack.addTranslation(Vector3D(position.x * 10, position.y * 10, 0));
+
+	myEngine.updateMvMatrix();
+	drawGare();
+	myEngine.mvMatrixStack.popMatrix();
 }
-
-

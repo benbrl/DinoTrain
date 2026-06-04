@@ -281,6 +281,7 @@ void drawScene(GridConfig config)
 
 	//  moteur();
 	rail_type_detect(config);
+	drawGare_position(config.origin);
 	drawTrain();
 	draw_dino();
 
