@@ -13,7 +13,7 @@ void drawBalast()
 
 	myEngine.mvMatrixStack.pushMatrix(),
 		myEngine.mvMatrixStack.addHomothety(Vector3D(rayon_rail_balast, axe_y - 4, rayon_rail_balast));
-	myEngine.mvMatrixStack.addTranslation(Vector3D(0, 0, rayon_rail_balast + rr));
+	myEngine.mvMatrixStack.addTranslation(Vector3D(0, 0, rayon_rail_balast * 2 + rr));
 	myEngine.updateMvMatrix();
 	myEngine.setFlatColor(0.549, 0.353, 0.235);
 	balast->draw();
