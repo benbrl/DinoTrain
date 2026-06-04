@@ -25,7 +25,7 @@ void drawRailFer()
 {
 
 	myEngine.mvMatrixStack.pushMatrix(),
-		myEngine.mvMatrixStack.addHomothety(Vector3D(sr / 2, axe_y, sr / 2));
+		myEngine.mvMatrixStack.addHomothety(Vector3D(sr, axe_y, sr));
 
 	myEngine.updateMvMatrix();
 	myEngine.setFlatColor(0.749, 0.788, 0.82);
