@@ -93,6 +93,12 @@ void onKey(GLFWwindow *window, int key, int /*scancode*/, int action, int /*mods
 	case GLFW_KEY_T:
 		dist_zoom += 0.9;
 		break;
+	case GLFW_KEY_B:
+		myEngine.switchToPhongShading();
+		break;
+	case GLFW_KEY_F:
+		myEngine.switchToFlatShading();
+		break;
 
 	default:
 		std::cerr << "Touche non gérée " << key << std::endl;
