@@ -61,3 +61,6 @@ void drawRailDroite();
 void drawGare();
 
 void drawArbre();
+
+
+void drawGare_position(Position position);
