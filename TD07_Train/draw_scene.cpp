@@ -320,10 +320,10 @@ void drawScene(GridConfig config)
 	// drawRailFer();
 	// drawBalast();
 	// drawRailDroite();
-	//	drawRailCourbe();
-	// drawRailFerCourbe();
-	// rail_type_detect(config);
-	// drawGare();
+	drawRailCourbe();
+	//drawRailFerCourbe();
+	//rail_type_detect(config);
+	//drawGare();
 	// drawArbre();
 	// drawBalast();
 	// drawRailDroite();

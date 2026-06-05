@@ -35,8 +35,24 @@ void onWindowResized(GLFWwindow * /*window*/, int width, int height)
 	myEngine.set3DProjection(90.0, aspectRatio, Z_NEAR, Z_FAR);
 }
 
+Vector3D pos_camera   = Vector3D(0, 0,  10);
+Vector3D front_vector = Vector3D(0.0f, 1.0f, 0.0f);
+Vector3D up_vector    = Vector3D(0.0f, 0.0f,  1.0f);
+float lastFrame = 0.0f;
+// float currentFrame = glfwGetTime();
+// float deltaTime    = currentFrame - lastFrame;
+// lastFrame          = currentFrame;
+float deltaTime    = 1.0f;
+float a{0};
+float b = M_PI/12.0f;
+float cameraSpeed = 2.5f * deltaTime;
+Vector3D right = (front_vector ^ up_vector);
+
+
+
 void onKey(GLFWwindow *window, int key, int /*scancode*/, int action, int /*mods*/)
 {
+	right.normalize();
 	int is_pressed = (action == GLFW_PRESS);
 	switch (key)
 	{
@@ -52,16 +68,24 @@ void onKey(GLFWwindow *window, int key, int /*scancode*/, int action, int /*mods
 		if (is_pressed)
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	case GLFW_KEY_UP:
-		angle_phy += 1.0;
+		pos_camera += front_vector * cameraSpeed;
 		break;
 	case GLFW_KEY_DOWN:
-		angle_phy -= 1.0;
+		pos_camera -= front_vector * cameraSpeed;
 		break;
 	case GLFW_KEY_LEFT:
-		angle_theta += 1.0;
+		pos_camera -= right * cameraSpeed;
 		break;
 	case GLFW_KEY_RIGHT:
-		angle_theta -= 1.0;
+		pos_camera += right * cameraSpeed;
+		break;
+	case GLFW_KEY_D:
+		a+= b;
+    	front_vector = Vector3D(cos(a),-sin(a),0);
+		break;
+	case GLFW_KEY_S:
+		a-= b;
+    	front_vector = Vector3D(cos(a),-sin(a),0);
 		break;
 	case GLFW_KEY_R:
 		dist_zoom -= 0.9;
@@ -69,6 +93,7 @@ void onKey(GLFWwindow *window, int key, int /*scancode*/, int action, int /*mods
 	case GLFW_KEY_T:
 		dist_zoom += 0.9;
 		break;
+
 	default:
 		std::cerr << "Touche non gérée " << key << std::endl;
 	}
@@ -153,6 +178,7 @@ int main(int /*argc*/, char ** /*argv*/)
 
 	double elapsedTime{0.0};
 
+
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
@@ -165,19 +191,13 @@ int main(int /*argc*/, char ** /*argv*/)
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glEnable(GL_DEPTH_TEST);
 
-		/* Fix camera position */
-		myEngine.mvMatrixStack.loadIdentity();
-		Vector3D pos_camera =
-			Vector3D(dist_zoom * cos(deg2rad(angle_theta)) * cos(deg2rad(angle_phy)),
-					 dist_zoom * sin(deg2rad(angle_theta)) * cos(deg2rad(angle_phy)),
-					 dist_zoom * sin(deg2rad(angle_phy)));
-		Vector3D viewed_point = Vector3D(0.0, 0.0, 0.0);
-		Vector3D up_vector = Vector3D(0.0, 0.0, 1.0);
-		Matrix4D viewMatrix = Matrix4D::lookAt(pos_camera, viewed_point, up_vector);
-		myEngine.setViewMatrix(viewMatrix);
-		myEngine.updateMvMatrix();
+		 	
+myEngine.mvMatrixStack.loadIdentity();
+Matrix4D viewMatrix = Matrix4D::lookAt(pos_camera, pos_camera + front_vector, up_vector);
+myEngine.setViewMatrix(viewMatrix);
+myEngine.updateMvMatrix();
 
-		drawScene(config);
+drawScene(config);
 
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);
