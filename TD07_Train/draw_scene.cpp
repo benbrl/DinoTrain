@@ -4,6 +4,9 @@
 #include "draw_rail_droite.hpp"
 #include "draw_rail_courbe.hpp"
 #include "draw_dino.hpp"
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+#include "glbasimac/glbi_texture.hpp"
 
 /// Camera parameters
 float angle_theta{45.0}; // Angle between x axis and viewpoint
@@ -12,7 +15,9 @@ float dist_zoom{30.0};	 // Distance between origin and viewpoint
 
 GLBI_Engine myEngine;
 GLBI_Set_Of_Points somePoints(3);
-GLBI_Convex_2D_Shape ground{3};
+// GLBI_Convex_2D_Shape ground{3};
+
+StandardMesh *ground = NULL;
 GLBI_Convex_2D_Shape ground_debug{3};
 GLBI_Convex_2D_Shape RailInt;
 GLBI_Convex_2D_Shape Rail1;
@@ -33,6 +38,8 @@ StandardMesh *cone = NULL;
 StandardMesh *rectangle = NULL;
 IndexedMesh *cercle = NULL;
 IndexedMesh *cube = NULL;
+
+GLBI_Texture myTexture;
 
 const float axe_x{10.0f};
 const float axe_y{10.0f};
@@ -57,8 +64,11 @@ void initScene()
 								 100.0, -100.0, 0.0,
 								 100.0, 100.0, 0.0,
 								 -100.0, 100.0, 0.0};
-	ground.initShape(baseCarre);
-	ground.changeNature(GL_TRIANGLE_FAN);
+	// ground.initShape(baseCarre);
+	// ground.changeNature(GL_TRIANGLE_FAN);
+
+	ground = basicRect(100.0, 100.0);
+	ground->createVAO();
 
 	std::vector<float> gridPoints;
 	std::vector<float> gridColor;
@@ -124,6 +134,28 @@ void initScene()
 
 	cube = basicCube(1.0f);
 	cube->createVAO();
+
+
+	// alors la je suis pas sur de l'initialisrtaion , dans le tp y'a ecrit c'est automatique mais ça crash chez moi donc je sais pas voila voila
+	int width{512};
+	int height{512};
+	int channels{3};
+
+	unsigned char *image_path =
+		stbi_load("../assets/textures/green-grass.jpg", &width, &height, &channels, 0);
+
+	if (image_path == nullptr)
+	{
+		std::cout << "erreur pas de texture" << std::endl;
+		return;
+	}
+
+	myTexture.createTexture();
+	myTexture.attachTexture();
+	myTexture.setParameters(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	myTexture.loadImage(width, height, channels, image_path);
+	myTexture.detachTexture();
+	stbi_image_free(image_path);
 
 	// Rail courbé 2D
 	std::vector<float> railIntPoints;
@@ -253,6 +285,23 @@ void initScene()
 	triangle.changeNature(GL_TRIANGLE_FAN);
 }
 
+void ground_position()
+{
+	myEngine.activateTexturing(true);
+	myTexture.attachTexture();
+	myEngine.mvMatrixStack.pushMatrix();
+	myEngine.mvMatrixStack.addRotation(deg2rad(90), Vector3D(1.0, 0.0, 0.0));
+	myEngine.mvMatrixStack.addRotation(deg2rad(90), Vector3D(0.0, 1.0, 0.0));
+
+	myEngine.mvMatrixStack.addTranslation(Vector3D(-50, 0, -50));
+	myEngine.updateMvMatrix();
+	ground->draw();
+
+	myTexture.detachTexture();
+	myEngine.activateTexturing(false);
+	myEngine.mvMatrixStack.popMatrix();
+}
+
 void drawScene(GridConfig config)
 {
 	glPointSize(10.0);
@@ -261,7 +310,8 @@ void drawScene(GridConfig config)
 	somePoints.drawSet();
 
 	myEngine.setFlatColor(0.435, 0.812, 0.592);
-	ground.drawShape();
+
+	ground_position();
 
 	myEngine.setFlatColor(1, 0.984, 0);
 	ground_debug.drawShape();

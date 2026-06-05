@@ -34,6 +34,7 @@ extern IndexedMesh *cercle;
 extern IndexedMesh *cube;
 extern IndexedMesh *cylindre;
 extern StandardMesh *cone;
+extern StandardMesh *ground;
 
 extern GLBI_Convex_2D_Shape Rail1;
 extern GLBI_Convex_2D_Shape Rail2;
@@ -64,3 +65,7 @@ void drawArbre();
 
 
 void drawGare_position(Position position);
+
+unsigned char *stbi_load(const char *filename, int &x, int &y, int &n, int c);
+
+void ground_position();
