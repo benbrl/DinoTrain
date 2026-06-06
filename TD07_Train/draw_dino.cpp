@@ -28,6 +28,23 @@ void draw_foot()
     myEngine.updateMvMatrix();
     jambe();
     myEngine.mvMatrixStack.popMatrix();
+
+    // pied 1
+    myEngine.mvMatrixStack.pushMatrix();
+
+    myEngine.mvMatrixStack.addHomothety(Vector3D(0.5, 1.5, 0.5));
+    myEngine.mvMatrixStack.addTranslation(Vector3D(0.1, 0, 0));
+    myEngine.updateMvMatrix();
+    triangle.drawShape();
+    myEngine.mvMatrixStack.popMatrix();
+
+    // pied 2
+    myEngine.mvMatrixStack.pushMatrix();
+    myEngine.mvMatrixStack.addHomothety(Vector3D(0.5, 1.5, 0.5));
+    myEngine.mvMatrixStack.addTranslation(Vector3D(-1.1, 0, 0));
+    myEngine.updateMvMatrix();
+    triangle.drawShape();
+    myEngine.mvMatrixStack.popMatrix();
 }
 
 void draw_corps()
@@ -39,6 +56,29 @@ void draw_corps()
     myEngine.updateMvMatrix();
 
     cercle->draw();
+    myEngine.mvMatrixStack.popMatrix();
+
+    // aile 1
+    myEngine.mvMatrixStack.pushMatrix();
+    myEngine.mvMatrixStack.addTranslation(Vector3D(0.5, 0, -0.5));
+    myEngine.mvMatrixStack.addHomothety(Vector3D(3, 3, 1.5));
+    myEngine.mvMatrixStack.addRotation(deg2rad(-90), Vector3D(1, 0, 0));
+    myEngine.mvMatrixStack.addRotation(deg2rad(-90), Vector3D(0, 0, 1));
+
+    myEngine.updateMvMatrix();
+    triangle.drawShape();
+    myEngine.mvMatrixStack.popMatrix();
+
+    // aile 2
+    myEngine.mvMatrixStack.pushMatrix();
+    myEngine.mvMatrixStack.addTranslation(Vector3D(-0.5, 0, -0.5));
+    myEngine.mvMatrixStack.addHomothety(Vector3D(3, 3, 1.5));
+    myEngine.mvMatrixStack.addRotation(deg2rad(-90), Vector3D(1, 0, 0));
+    myEngine.mvMatrixStack.addRotation(deg2rad(-90), Vector3D(0, 0, 1));
+    myEngine.mvMatrixStack.addRotation(deg2rad(180), Vector3D(0, 0, 1));
+    myEngine.mvMatrixStack.addTranslation(Vector3D(-1, 0, 0));
+    myEngine.updateMvMatrix();
+    triangle.drawShape();
     myEngine.mvMatrixStack.popMatrix();
 }
 
@@ -108,5 +148,17 @@ void draw_dino()
     myEngine.mvMatrixStack.addTranslation(Vector3D(0, 0, 4.2));
     myEngine.mvMatrixStack.addHomothety(Vector3D(0.6, 0.6, 0.6));
     draw_tete();
+    myEngine.mvMatrixStack.popMatrix();
+}
+
+void draw_dino_position(int x, int y)
+{
+
+    myEngine.mvMatrixStack.popMatrix();
+    myEngine.mvMatrixStack.pushMatrix();
+    myEngine.mvMatrixStack.addTranslation(Vector3D(x * 10, y * 10, 0));
+
+    myEngine.updateMvMatrix();
+    draw_dino();
     myEngine.mvMatrixStack.popMatrix();
 }
