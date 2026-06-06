@@ -42,6 +42,55 @@ void draw_corps()
     myEngine.mvMatrixStack.popMatrix();
 }
 
+void draw_tete()
+{
+
+    // tete
+    myEngine.mvMatrixStack.pushMatrix();
+    myEngine.mvMatrixStack.addRotation(deg2rad(-20), Vector3D(1.0, 0.0, 0.0));
+    myEngine.mvMatrixStack.addHomothety(Vector3D(1, 3, 1));
+    myEngine.setFlatColor(0.357, 0.494, 0.235);
+    myEngine.updateMvMatrix();
+    cone->draw();
+    myEngine.mvMatrixStack.popMatrix();
+
+    // fin de la tete
+    myEngine.mvMatrixStack.pushMatrix();
+    myEngine.setFlatColor(0.357, 0.494, 0.235);
+    myEngine.updateMvMatrix();
+    cercle->draw();
+    myEngine.mvMatrixStack.popMatrix();
+
+    // petit queue mais sur la tete
+    myEngine.mvMatrixStack.pushMatrix();
+    myEngine.mvMatrixStack.addRotation(deg2rad(130), Vector3D(1.0, 0.0, 0.0));
+    myEngine.mvMatrixStack.addHomothety(Vector3D(0.3, 1.5, 0.5));
+    myEngine.mvMatrixStack.addTranslation(Vector3D(0, 0.5, 0));
+    myEngine.setFlatColor(1, 1, 1);
+    myEngine.updateMvMatrix();
+    cone->draw();
+    myEngine.mvMatrixStack.popMatrix();
+
+    // yeux 1
+    myEngine.mvMatrixStack.pushMatrix();
+    myEngine.mvMatrixStack.addHomothety(Vector3D(0.3, 0.3, 0.3));
+    myEngine.mvMatrixStack.addTranslation(Vector3D(1, 4, 0));
+    myEngine.setFlatColor(1, 1, 1);
+    myEngine.updateMvMatrix();
+    cercle->draw();
+    myEngine.mvMatrixStack.popMatrix();
+
+    // yeux 2
+
+    myEngine.mvMatrixStack.pushMatrix();
+    myEngine.mvMatrixStack.addHomothety(Vector3D(0.3, 0.3, 0.3));
+    myEngine.mvMatrixStack.addTranslation(Vector3D(-1, 4, 0));
+    myEngine.setFlatColor(1, 1, 1);
+    myEngine.updateMvMatrix();
+    cercle->draw();
+    myEngine.mvMatrixStack.popMatrix();
+}
+
 void draw_dino()
 {
     draw_foot();
@@ -53,5 +102,11 @@ void draw_dino()
     myEngine.mvMatrixStack.pushMatrix();
     myEngine.mvMatrixStack.addTranslation(Vector3D(0, 0, 3));
     jambe();
+    myEngine.mvMatrixStack.popMatrix();
+
+    myEngine.mvMatrixStack.pushMatrix();
+    myEngine.mvMatrixStack.addTranslation(Vector3D(0, 0, 4.2));
+    myEngine.mvMatrixStack.addHomothety(Vector3D(0.6, 0.6, 0.6));
+    draw_tete();
     myEngine.mvMatrixStack.popMatrix();
 }
