@@ -55,6 +55,8 @@ Vector3D z_axe{0.0f, 0.0f, 1.0f};
 Vector3D y_axe{0.0f, 1.0f, 0.0f};
 Vector3D x_axe{1.0f, 0.0f, 0.0f};
 
+GLBI_Set_Of_Points grid_pts(3);
+
 void initScene()
 {
 	std::vector<float> points{0.0, 0.0, 0.0};
@@ -98,8 +100,8 @@ void initScene()
 			gridColor.push_back(0.0f);
 		}
 	}
-	// grid_pts.initSet(gridPoints, gridColor);
-	// grid_pts.changeNature(GL_LINES);
+	grid_pts.initSet(gridPoints, gridColor);
+	grid_pts.changeNature(GL_LINES);
 
 	// debug
 	std::vector<float> carreDebug{
@@ -305,7 +307,7 @@ void ground_position()
 void drawScene(GridConfig config)
 {
 	glPointSize(10.0);
-	// grid_pts.drawSet();
+	grid_pts.drawSet();
 
 	somePoints.drawSet();
 
@@ -321,5 +323,5 @@ void drawScene(GridConfig config)
 	drawGare_position(config.origin);
 	draw_random_position_arbre(config, 10);
 	drawTrain();
-	draw_dino();
+	draw_dino_position(1, 1, -90);
 }
