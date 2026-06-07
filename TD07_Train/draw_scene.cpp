@@ -317,17 +317,9 @@ void drawScene(GridConfig config)
 	ground_debug.drawShape();
 	myEngine.setFlatColor(0.2, 1.0, 0.8);
 
-	// drawRailFer();
-	// drawBalast();
-	// drawRailDroite();
-	//	drawRailCourbe();
-	// drawRailFerCourbe();
-	// rail_type_detect(config);
-	// drawGare();
-	// drawArbre();
-	// drawBalast();
-	// drawRailDroite();
-	// drawRailDroite_position(0, 1);
-
-	//  moteur();
-	draw_dino_position(0, 0);
+	rail_type_detect(config);
+	drawGare_position(config.origin);
+	draw_random_position_arbre(config, 10);
+	drawTrain();
+	draw_dino();
+}
