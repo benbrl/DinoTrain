@@ -123,7 +123,7 @@ void draw_tete()
     // pupille 1
     myEngine.mvMatrixStack.pushMatrix();
     myEngine.mvMatrixStack.addHomothety(Vector3D(0.15, 0.15, 0.15));
-myEngine.mvMatrixStack.addTranslation(Vector3D(2.5, 9, 1.5));
+    myEngine.mvMatrixStack.addTranslation(Vector3D(2.5, 9, 1.5));
     myEngine.setFlatColor(0.4, 0.7, 1.0);
     myEngine.updateMvMatrix();
     cercle->draw();
@@ -169,13 +169,14 @@ void draw_dino()
     myEngine.mvMatrixStack.popMatrix();
 }
 
-void draw_dino_position(int x, int y)
+void draw_dino_position(int x, int y, int rotation)
 {
 
     myEngine.mvMatrixStack.popMatrix();
     myEngine.mvMatrixStack.pushMatrix();
-    myEngine.mvMatrixStack.addTranslation(Vector3D(x * 10, y * 10, 0));
 
+    myEngine.mvMatrixStack.addTranslation(Vector3D(x * 10, y * 10, 0));
+    myEngine.mvMatrixStack.addRotation(deg2rad(rotation), Vector3D(0.0, 0.0, 1.0));
     myEngine.updateMvMatrix();
     draw_dino();
     myEngine.mvMatrixStack.popMatrix();
