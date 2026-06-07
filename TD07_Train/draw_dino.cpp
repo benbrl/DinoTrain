@@ -120,12 +120,30 @@ void draw_tete()
     cercle->draw();
     myEngine.mvMatrixStack.popMatrix();
 
+    // pupille 1
+    myEngine.mvMatrixStack.pushMatrix();
+    myEngine.mvMatrixStack.addHomothety(Vector3D(0.15, 0.15, 0.15));
+myEngine.mvMatrixStack.addTranslation(Vector3D(2.5, 9, 1.5));
+    myEngine.setFlatColor(0.4, 0.7, 1.0);
+    myEngine.updateMvMatrix();
+    cercle->draw();
+    myEngine.mvMatrixStack.popMatrix();
+
     // yeux 2
 
     myEngine.mvMatrixStack.pushMatrix();
     myEngine.mvMatrixStack.addHomothety(Vector3D(0.3, 0.3, 0.3));
     myEngine.mvMatrixStack.addTranslation(Vector3D(-1, 4, 0));
     myEngine.setFlatColor(1, 1, 1);
+    myEngine.updateMvMatrix();
+    cercle->draw();
+    myEngine.mvMatrixStack.popMatrix();
+
+    // pupille 2
+    myEngine.mvMatrixStack.pushMatrix();
+    myEngine.mvMatrixStack.addHomothety(Vector3D(0.15, 0.15, 0.15));
+    myEngine.mvMatrixStack.addTranslation(Vector3D(-2.5, 9, 1.5));
+    myEngine.setFlatColor(0.4, 0.7, 1.0);
     myEngine.updateMvMatrix();
     cercle->draw();
     myEngine.mvMatrixStack.popMatrix();
