@@ -72,24 +72,23 @@ void drawRailDroite()
 	myEngine.updateMvMatrix();
 }
 
-// WIP mettre float/int rotation apres
-void drawRailDroite_position(int x, int y)
+void drawRailDroite_position(int x, int y, float rotation)
 {
-	// std::cout << "---------------- position rails ---------------" << std::endl;
-
-	// std::cout << x << std::endl;
-	// std::cout << y << std::endl;
-
 	myEngine.mvMatrixStack.pushMatrix();
 
 	myEngine.mvMatrixStack.addTranslation(Vector3D(x * 10, y * 10, 0));
+	myEngine.mvMatrixStack.addTranslation(Vector3D(5, 5, 0));
+
+	if (rotation != 0)
+	{
+		myEngine.mvMatrixStack.addRotation(deg2rad(rotation), Vector3D(0, 0, 1));
+	}
+
+	myEngine.mvMatrixStack.addTranslation(Vector3D(-5, -5, 0));
+
 	myEngine.updateMvMatrix();
 	drawRailDroite();
 
 	myEngine.mvMatrixStack.popMatrix();
 	myEngine.updateMvMatrix();
-
-	// std::cout << "---------------- en fois 10 ---------------" << std::endl;
-	// std::cout << x * 10 << std::endl;
-	// std::cout << y * 10 << std::endl;
 }

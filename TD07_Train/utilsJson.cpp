@@ -63,8 +63,6 @@ GridConfig read_json()
 void rail_type_detect(GridConfig config)
 {
     // std::cout << "-------------- debug config --------------" << std::endl;
-    // debug
-
     std::vector<Position> rails = config.path;
     // for (auto const &valeur : rails)
     // {
@@ -73,45 +71,109 @@ void rail_type_detect(GridConfig config)
 
     if ((rails[1].x == rails.back().x && rails[1].y != rails.back().y) || (rails[1].y == rails.back().y && rails[1].x != rails.back().x))
     {
+        float rotation = 0.0f;
 
-        drawRailDroite_position(rails[0].x, rails[0].y);
+        if (rails[1].x != rails.back().x)
+        {
+            rotation = 0.0f;
+        }
+        else
+        {
+            rotation = 90.0f;
+        }
 
-        // std::cout
-        //     << "la rail " << 1 << " est droite " << std::endl;
+        drawRailDroite_position(rails[0].x, rails[0].y, rotation);
+        // std::cout << "la rail " << 0 << " est droite " << std::endl;
     }
     else
     {
-
-        drawRailCourbe_position(rails[0].x, rails[0].y);
-   
+        float rotation = 0.0f;
+        if (((rails[0].x - rails.back().x) == 1 && (rails[1].y - rails[0].y) == 1) || ((rails[0].y - rails.back().y) == -1 && (rails[1].x - rails[0].x) == -1))
+        {
+            rotation = 270.0f;
+        }
+        else if (((rails[0].y - rails.back().y) == 1 && (rails[1].x - rails[0].x) == -1) || ((rails[0].x - rails.back().x) == 1 && (rails[1].y - rails[0].y) == -1))
+        {
+            rotation = 0.0f;
+        }
+        else if (((rails[0].x - rails.back().x) == -1 && (rails[1].y - rails[0].y) == -1) || ((rails[0].y - rails.back().y) == 1 && (rails[1].x - rails[0].x) == 1))
+        {
+            rotation = 90.0f;
+        }
+        else if (((rails[0].y - rails.back().y) == -1 && (rails[1].x - rails[0].x) == 1) || ((rails[0].x - rails.back().x) == -1 && (rails[1].y - rails[0].y) == 1))
+        {
+            rotation = 180.0f;
+        }
+        drawRailCourbe_position(rails[0].x, rails[0].y, rotation);
     }
 
     for (size_t i = 0; i < rails.size() - 2; i++)
     {
-
         if ((rails[i].x == rails[i + 2].x && rails[i].y != rails[i + 2].y) || (rails[i].y == rails[i + 2].y && rails[i].x != rails[i + 2].x))
         {
-
-            drawRailDroite_position(rails[i + 1].x, rails[i + 1].y);
-
+            drawRailDroite_position(rails[i + 1].x, rails[i + 1].y, (rails[i].x != rails[i + 2].x) ? 0.0f : 90.0f);
             // std::cout << "la rail " << i + 1 << " est droite " << std::endl;
         }
         else
         {
-            // drawRailCourbe(rails[i + 1].x, rails[i + 1].y);
-            drawRailCourbe_position(rails[i + 1].x, rails[i + 1].y);
-            // std::cout << "la rail " << i + 1 << " est courbe" << std::endl;
-        }
+            float rotation = 0.0f;
+            if (((rails[i + 1].x - rails[i].x) == 1 && (rails[i + 2].y - rails[i + 1].y) == 1) || ((rails[i + 1].y - rails[i].y) == -1 && (rails[i + 2].x - rails[i + 1].x) == -1))
+            {
+                rotation = 270.0f;
+            }
+            else if (((rails[i + 1].y - rails[i].y) == 1 && (rails[i + 2].x - rails[i + 1].x) == -1) || ((rails[i + 1].x - rails[i].x) == 1 && (rails[i + 2].y - rails[i + 1].y) == -1))
+            {
+                rotation = 0.0f;
+            }
 
-        // a finir car la ça sort du si c'est la fin du tableau prendre le premeir element
+            else if (((rails[i + 1].x - rails[i].x) == -1 && (rails[i + 2].y - rails[i + 1].y) == -1) || ((rails[i + 1].y - rails[i].y) == 1 && (rails[i + 2].x - rails[i + 1].x) == 1))
+            {
+                rotation = 90.0f;
+            }
+            else if (((rails[i + 1].y - rails[i].y) == -1 && (rails[i + 2].x - rails[i + 1].x) == 1) || ((rails[i + 1].x - rails[i].x) == -1 && (rails[i + 2].y - rails[i + 1].y) == 1))
+            {
+                rotation = 180.0f;
+            }
+            drawRailCourbe_position(rails[i + 1].x, rails[i + 1].y, rotation);
+        }
     }
 
     if ((rails[rails.size() - 2].x == rails[0].x && rails[rails.size() - 2].y != rails[0].y) || (rails[rails.size() - 2].y == rails[0].y && rails[rails.size() - 2].x != rails[0].x))
     {
-        drawRailDroite_position(rails.back().x, rails.back().y);
+
+        float rotation = 0.0f;
+
+        if (rails[rails.size() - 2].x != rails[0].x)
+        {
+            rotation = 0.0f;
+        }
+        else
+        {
+            rotation = 90.0f;
+        }
+
+        drawRailDroite_position(rails.back().x, rails.back().y, rotation);
+        // std::cout << "la rail " << rails.size() - 1 << " est droite " << std::endl;
     }
     else
     {
-        drawRailCourbe_position(rails.back().x, rails.back().y);
+        float rotation = 0.0f;
+        if (((rails.back().x - rails[rails.size() - 2].x) == 1 && (rails[0].y - rails.back().y) == 1) || ((rails.back().y - rails[rails.size() - 2].y) == -1 && (rails[0].x - rails.back().x) == -1))
+        {
+            rotation = 270.0f;
+        }
+        else if (((rails.back().y - rails[rails.size() - 2].y) == 1 && (rails[0].x - rails.back().x) == -1) || ((rails.back().x - rails[rails.size() - 2].x) == 1 && (rails[0].y - rails.back().y) == -1))
+        {
+            rotation = 0.0f;
+        }
+        else if (((rails.back().x - rails[rails.size() - 2].x) == -1 && (rails[0].y - rails.back().y) == -1) || ((rails.back().y - rails[rails.size() - 2].y) == 1 && (rails[0].x - rails.back().x) == 1))
+        {
+            rotation = 90.0f;
+        }
+        else if (((rails.back().y - rails[rails.size() - 2].y) == -1 && (rails[0].x - rails.back().x) == 1) || ((rails.back().x - rails[rails.size() - 2].x) == -1 && (rails[0].y - rails.back().y) == 1))
+        {
+            rotation = 180.0f;
+        }
+        drawRailCourbe_position(rails.back().x, rails.back().y, rotation);
     }
 }

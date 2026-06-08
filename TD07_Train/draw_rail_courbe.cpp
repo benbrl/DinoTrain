@@ -34,22 +34,27 @@ void drawRailCourbe()
     myEngine.mvMatrixStack.pushMatrix();
     drawRailFerCourbe();
     myEngine.mvMatrixStack.popMatrix();
-    myEngine.updateMvMatrix();
 }
 
-void drawRailCourbe_position(int x, int y)
+void drawRailCourbe_position(int x, int y, float rotation)
 {
     // std::cout << "---------------- position rails ---------------" << std::endl;
-
     // std::cout << x << std::endl;
     // std::cout << y << std::endl;
-
     myEngine.mvMatrixStack.pushMatrix();
 
     myEngine.mvMatrixStack.addTranslation(Vector3D(x * 10, y * 10, 0));
+    myEngine.mvMatrixStack.addTranslation(Vector3D(5, 5, 0));
+
+    if (rotation != 0)
+    {
+        myEngine.mvMatrixStack.addRotation(deg2rad(rotation), Vector3D(0, 0, 1));
+    }
+
+    myEngine.mvMatrixStack.addTranslation(Vector3D(-5, -5, 0));
+
     myEngine.updateMvMatrix();
     drawRailCourbe();
-
     myEngine.mvMatrixStack.popMatrix();
     myEngine.updateMvMatrix();
 }

@@ -28,6 +28,23 @@ void draw_foot()
     myEngine.updateMvMatrix();
     jambe();
     myEngine.mvMatrixStack.popMatrix();
+
+    // pied 1
+    myEngine.mvMatrixStack.pushMatrix();
+
+    myEngine.mvMatrixStack.addHomothety(Vector3D(0.5, 1.5, 0.5));
+    myEngine.mvMatrixStack.addTranslation(Vector3D(0.1, 0, 0));
+    myEngine.updateMvMatrix();
+    triangle.drawShape();
+    myEngine.mvMatrixStack.popMatrix();
+
+    // pied 2
+    myEngine.mvMatrixStack.pushMatrix();
+    myEngine.mvMatrixStack.addHomothety(Vector3D(0.5, 1.5, 0.5));
+    myEngine.mvMatrixStack.addTranslation(Vector3D(-1.1, 0, 0));
+    myEngine.updateMvMatrix();
+    triangle.drawShape();
+    myEngine.mvMatrixStack.popMatrix();
 }
 
 void draw_corps()
@@ -38,6 +55,96 @@ void draw_corps()
     myEngine.setFlatColor(0.357, 0.494, 0.235);
     myEngine.updateMvMatrix();
 
+    cercle->draw();
+    myEngine.mvMatrixStack.popMatrix();
+
+    // aile 1
+    myEngine.mvMatrixStack.pushMatrix();
+    myEngine.mvMatrixStack.addTranslation(Vector3D(0.5, 0, -0.5));
+    myEngine.mvMatrixStack.addHomothety(Vector3D(3, 3, 1.5));
+    myEngine.mvMatrixStack.addRotation(deg2rad(-90), Vector3D(1, 0, 0));
+    myEngine.mvMatrixStack.addRotation(deg2rad(-90), Vector3D(0, 0, 1));
+
+    myEngine.updateMvMatrix();
+    triangle.drawShape();
+    myEngine.mvMatrixStack.popMatrix();
+
+    // aile 2
+    myEngine.mvMatrixStack.pushMatrix();
+    myEngine.mvMatrixStack.addTranslation(Vector3D(-0.5, 0, -0.5));
+    myEngine.mvMatrixStack.addHomothety(Vector3D(3, 3, 1.5));
+    myEngine.mvMatrixStack.addRotation(deg2rad(-90), Vector3D(1, 0, 0));
+    myEngine.mvMatrixStack.addRotation(deg2rad(-90), Vector3D(0, 0, 1));
+    myEngine.mvMatrixStack.addRotation(deg2rad(180), Vector3D(0, 0, 1));
+    myEngine.mvMatrixStack.addTranslation(Vector3D(-1, 0, 0));
+    myEngine.updateMvMatrix();
+    triangle.drawShape();
+    myEngine.mvMatrixStack.popMatrix();
+}
+
+void draw_tete()
+{
+
+    // tete
+    myEngine.mvMatrixStack.pushMatrix();
+    myEngine.mvMatrixStack.addRotation(deg2rad(-20), Vector3D(1.0, 0.0, 0.0));
+    myEngine.mvMatrixStack.addHomothety(Vector3D(1, 3, 1));
+    myEngine.setFlatColor(0.357, 0.494, 0.235);
+    myEngine.updateMvMatrix();
+    cone->draw();
+    myEngine.mvMatrixStack.popMatrix();
+
+    // fin de la tete
+    myEngine.mvMatrixStack.pushMatrix();
+    myEngine.setFlatColor(0.357, 0.494, 0.235);
+    myEngine.updateMvMatrix();
+    cercle->draw();
+    myEngine.mvMatrixStack.popMatrix();
+
+    // petit queue mais sur la tete
+    myEngine.mvMatrixStack.pushMatrix();
+    myEngine.mvMatrixStack.addRotation(deg2rad(130), Vector3D(1.0, 0.0, 0.0));
+    myEngine.mvMatrixStack.addHomothety(Vector3D(0.3, 1.5, 0.5));
+    myEngine.mvMatrixStack.addTranslation(Vector3D(0, 0.5, 0));
+    myEngine.setFlatColor(1, 1, 1);
+    myEngine.updateMvMatrix();
+    cone->draw();
+    myEngine.mvMatrixStack.popMatrix();
+
+    // yeux 1
+    myEngine.mvMatrixStack.pushMatrix();
+    myEngine.mvMatrixStack.addHomothety(Vector3D(0.3, 0.3, 0.3));
+    myEngine.mvMatrixStack.addTranslation(Vector3D(1, 4, 0));
+    myEngine.setFlatColor(1, 1, 1);
+    myEngine.updateMvMatrix();
+    cercle->draw();
+    myEngine.mvMatrixStack.popMatrix();
+
+    // pupille 1
+    myEngine.mvMatrixStack.pushMatrix();
+    myEngine.mvMatrixStack.addHomothety(Vector3D(0.15, 0.15, 0.15));
+    myEngine.mvMatrixStack.addTranslation(Vector3D(2.5, 9, 1.5));
+    myEngine.setFlatColor(0.4, 0.7, 1.0);
+    myEngine.updateMvMatrix();
+    cercle->draw();
+    myEngine.mvMatrixStack.popMatrix();
+
+    // yeux 2
+
+    myEngine.mvMatrixStack.pushMatrix();
+    myEngine.mvMatrixStack.addHomothety(Vector3D(0.3, 0.3, 0.3));
+    myEngine.mvMatrixStack.addTranslation(Vector3D(-1, 4, 0));
+    myEngine.setFlatColor(1, 1, 1);
+    myEngine.updateMvMatrix();
+    cercle->draw();
+    myEngine.mvMatrixStack.popMatrix();
+
+    // pupille 2
+    myEngine.mvMatrixStack.pushMatrix();
+    myEngine.mvMatrixStack.addHomothety(Vector3D(0.15, 0.15, 0.15));
+    myEngine.mvMatrixStack.addTranslation(Vector3D(-2.5, 9, 1.5));
+    myEngine.setFlatColor(0.4, 0.7, 1.0);
+    myEngine.updateMvMatrix();
     cercle->draw();
     myEngine.mvMatrixStack.popMatrix();
 }
@@ -53,5 +160,24 @@ void draw_dino()
     myEngine.mvMatrixStack.pushMatrix();
     myEngine.mvMatrixStack.addTranslation(Vector3D(0, 0, 3));
     jambe();
+    myEngine.mvMatrixStack.popMatrix();
+
+    myEngine.mvMatrixStack.pushMatrix();
+    myEngine.mvMatrixStack.addTranslation(Vector3D(0, 0, 4.2));
+    myEngine.mvMatrixStack.addHomothety(Vector3D(0.6, 0.6, 0.6));
+    draw_tete();
+    myEngine.mvMatrixStack.popMatrix();
+}
+
+void draw_dino_position(int x, int y, int rotation)
+{
+
+    myEngine.mvMatrixStack.popMatrix();
+    myEngine.mvMatrixStack.pushMatrix();
+
+    myEngine.mvMatrixStack.addTranslation(Vector3D(x * 10, y * 10, 0));
+    myEngine.mvMatrixStack.addRotation(deg2rad(rotation), Vector3D(0.0, 0.0, 1.0));
+    myEngine.updateMvMatrix();
+    draw_dino();
     myEngine.mvMatrixStack.popMatrix();
 }

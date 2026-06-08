@@ -1,10 +1,10 @@
 #include "draw_train.hpp"
 
 float hauteur_cube{2};
+float longeur_cube{4};
 float largeur_cube{7};
-float longeur_cube{7};
 
-double marge_sol{0.70};
+double marge_sol{1.5};
 
 float marge{0.5};
 
@@ -37,8 +37,8 @@ void corps_roue()
 	// corps du train
 	myEngine.mvMatrixStack.pushMatrix();
 
-	float marge_largeur = ((10 - largeur_cube) / 2) + largeur_cube / 2;
-	float marge_longeur = ((10 - longeur_cube) / 2) + longeur_cube / 2;
+	float marge_largeur = 5.0f;
+	float marge_longeur = 5.0f;
 	float marge_hauteur = hauteur_cube / 2 + marge_sol;
 
 	myEngine.mvMatrixStack.addTranslation(Vector3D(marge_largeur, marge_longeur, marge_hauteur));
@@ -50,68 +50,98 @@ void corps_roue()
 
 	float largeur_roue = 0.2f;
 	float rayon_roue = 1.0f;
-	float rayon_petite_roue = 0.5f;
+	float rayon_petite = 0.5f;
 
-	float x_gauche = marge_largeur - largeur_cube / 2 - largeur_roue / 2;
-	float x_droit = marge_largeur + largeur_cube / 2 + largeur_roue / 2;
-	float y_arriere_1 = marge_longeur - longeur_cube / 2 + rayon_roue;
+	float x_gauche = marge_largeur - longeur_cube / 2 - largeur_roue / 2;
+	float x_droit = marge_largeur + longeur_cube / 2 + largeur_roue / 2;
+	float y_arriere_1 = marge_longeur - largeur_cube / 2 + rayon_roue;
 	float y_arriere_2 = y_arriere_1 + 2 * rayon_roue + marge;
-	float y_avant = marge_longeur + longeur_cube / 2 - rayon_petite_roue;
-	float z_grosse = marge_hauteur - hauteur_cube / 2;
+	float y_avant = marge_longeur + largeur_cube / 2 - rayon_petite;
+	float z_grosse = marge_hauteur - hauteur_cube / 2; // posées sur le sol
 	float z_petite = z_grosse;
+
+	float hauteur_roue_grande = rayon_roue / 2 + rayon_roue + rr;
+
+	float hauteur_roue_petite = rayon_petite / 2 + rayon_petite + rr;
 
 	// roue arriere gauche premiere
 	myEngine.mvMatrixStack.pushMatrix();
-	myEngine.mvMatrixStack.addTranslation(Vector3D(x_gauche, y_arriere_1, z_grosse));
+	myEngine.mvMatrixStack.addTranslation(Vector3D(x_gauche, y_arriere_1, hauteur_roue_grande));
 	myEngine.mvMatrixStack.addRotation(deg2rad(90), Vector3D(0.0, 0.0, 1.0));
 	myEngine.mvMatrixStack.addHomothety(Vector3D(rayon_roue, largeur_roue, rayon_roue));
+	myEngine.setFlatColor(1, 0.788, 0.302);
 	myEngine.updateMvMatrix();
-	roue();
+	cercle->draw();
 	myEngine.mvMatrixStack.popMatrix();
 
 	// roue arriere gauche deuxieme
 	myEngine.mvMatrixStack.pushMatrix();
-	myEngine.mvMatrixStack.addTranslation(Vector3D(x_gauche, y_arriere_2, z_grosse));
+	myEngine.mvMatrixStack.addTranslation(Vector3D(x_gauche, y_arriere_2, hauteur_roue_grande));
 	myEngine.mvMatrixStack.addRotation(deg2rad(90), Vector3D(0.0, 0.0, 1.0));
 	myEngine.mvMatrixStack.addHomothety(Vector3D(rayon_roue, largeur_roue, rayon_roue));
+	myEngine.setFlatColor(1, 0.788, 0.302);
 	myEngine.updateMvMatrix();
-	roue();
+	cercle->draw();
 	myEngine.mvMatrixStack.popMatrix();
 
 	// roue arriere droite premiere
 	myEngine.mvMatrixStack.pushMatrix();
-	myEngine.mvMatrixStack.addTranslation(Vector3D(x_droit, y_arriere_1, z_grosse));
+	myEngine.mvMatrixStack.addTranslation(Vector3D(x_droit, y_arriere_1, hauteur_roue_grande));
 	myEngine.mvMatrixStack.addRotation(deg2rad(90), Vector3D(0.0, 0.0, 1.0));
 	myEngine.mvMatrixStack.addHomothety(Vector3D(rayon_roue, largeur_roue, rayon_roue));
+	myEngine.setFlatColor(1, 0.788, 0.302);
 	myEngine.updateMvMatrix();
-	roue();
+	cercle->draw();
 	myEngine.mvMatrixStack.popMatrix();
 
 	// roue arriere droite deuxieme
 	myEngine.mvMatrixStack.pushMatrix();
-	myEngine.mvMatrixStack.addTranslation(Vector3D(x_droit, y_arriere_2, z_grosse));
+	myEngine.mvMatrixStack.addTranslation(Vector3D(x_droit, y_arriere_2, hauteur_roue_grande));
 	myEngine.mvMatrixStack.addRotation(deg2rad(90), Vector3D(0.0, 0.0, 1.0));
 	myEngine.mvMatrixStack.addHomothety(Vector3D(rayon_roue, largeur_roue, rayon_roue));
+	myEngine.setFlatColor(1, 0.788, 0.302);
 	myEngine.updateMvMatrix();
-	roue();
+	cercle->draw();
 	myEngine.mvMatrixStack.popMatrix();
 
-	// roue avant gauche
+	// petite roue avant 1
+	myEngine.mvMatrixStack.pushMatrix();
+	myEngine.mvMatrixStack.addTranslation(Vector3D(x_gauche, y_avant - 1.3, z_petite));
+	myEngine.mvMatrixStack.addRotation(deg2rad(90), Vector3D(0.0, 0.0, 1.0));
+	myEngine.mvMatrixStack.addHomothety(Vector3D(rayon_petite, largeur_roue, rayon_petite));
+	myEngine.setFlatColor(1, 0.788, 0.302);
+	myEngine.updateMvMatrix();
+	cercle->draw();
+	myEngine.mvMatrixStack.popMatrix();
+
+	// petite roue avant 2
+	myEngine.mvMatrixStack.pushMatrix();
+	myEngine.mvMatrixStack.addTranslation(Vector3D(x_droit, y_avant - 1.3, z_petite));
+	myEngine.mvMatrixStack.addRotation(deg2rad(90), Vector3D(0.0, 0.0, 1.0));
+	myEngine.mvMatrixStack.addHomothety(Vector3D(rayon_petite, largeur_roue, rayon_petite));
+	myEngine.setFlatColor(1, 0.788, 0.302);
+	myEngine.updateMvMatrix();
+	cercle->draw();
+	myEngine.mvMatrixStack.popMatrix();
+
+	// petite roue avant 3
 	myEngine.mvMatrixStack.pushMatrix();
 	myEngine.mvMatrixStack.addTranslation(Vector3D(x_gauche, y_avant, z_petite));
 	myEngine.mvMatrixStack.addRotation(deg2rad(90), Vector3D(0.0, 0.0, 1.0));
-	myEngine.mvMatrixStack.addHomothety(Vector3D(rayon_petite_roue, largeur_roue, rayon_petite_roue));
+	myEngine.mvMatrixStack.addHomothety(Vector3D(rayon_petite, largeur_roue, rayon_petite));
+	myEngine.setFlatColor(1, 0.788, 0.302);
 	myEngine.updateMvMatrix();
-	roue();
+	cercle->draw();
 	myEngine.mvMatrixStack.popMatrix();
 
-	// roue avant droite
+	// petite roue avant 14
 	myEngine.mvMatrixStack.pushMatrix();
 	myEngine.mvMatrixStack.addTranslation(Vector3D(x_droit, y_avant, z_petite));
 	myEngine.mvMatrixStack.addRotation(deg2rad(90), Vector3D(0.0, 0.0, 1.0));
-	myEngine.mvMatrixStack.addHomothety(Vector3D(rayon_petite_roue, largeur_roue, rayon_petite_roue));
+	myEngine.mvMatrixStack.addHomothety(Vector3D(rayon_petite, largeur_roue, rayon_petite));
+	myEngine.setFlatColor(1, 0.788, 0.302);
 	myEngine.updateMvMatrix();
-	roue();
+	cercle->draw();
 	myEngine.mvMatrixStack.popMatrix();
 }
 
@@ -229,8 +259,8 @@ void cheminee()
 
 void cabine()
 {
-	float marge_largeur = ((10 - largeur_cube) / 2) + largeur_cube / 2;
-	float marge_longeur = ((10 - longeur_cube) / 2) + longeur_cube / 2;
+	float marge_largeur = ((10 - longeur_cube) / 2) + longeur_cube / 2;
+	float marge_longeur = ((10 - largeur_cube) / 2) + largeur_cube / 2;
 	float marge_hauteur = hauteur_cube / 2 + marge_sol;
 
 	// cylindre rouge
@@ -239,9 +269,9 @@ void cabine()
 
 	float hauteur_cabine = 2.f;
 
-	float x_min = marge_largeur - largeur_cube / 2;
-	float x_max = marge_largeur + largeur_cube / 2;
-	float y_min = marge_longeur - longeur_cube / 2;
+	float x_min = marge_largeur - longeur_cube / 2;
+	float x_max = marge_largeur + longeur_cube / 2;
+	float y_min = marge_longeur - largeur_cube / 2;
 	float z_haut = marge_hauteur + hauteur_cube / 2 - hauteur_cabine / 2 + hauteur_cabine;
 
 	// coin arriere gauche
@@ -285,13 +315,13 @@ void cabine()
 	// le toit
 
 	float hauteur_toit = 0.2f;
-	float longueur_toit = longeur_cube - 3;
+	float longueur_toit = largeur_cube - 3;
 	float z_toit = marge_hauteur + hauteur_cube / 2 + hauteur_cabine + hauteur_toit / 2;
 	float centre_x = (x_min + x_max) / 2;
 
 	myEngine.mvMatrixStack.pushMatrix();
 	myEngine.mvMatrixStack.addTranslation(Vector3D(centre_x, longueur_toit - largeur_bloc, z_toit));
-	myEngine.mvMatrixStack.addHomothety(Vector3D(largeur_cube, longueur_toit, hauteur_toit));
+	myEngine.mvMatrixStack.addHomothety(Vector3D(longeur_cube, longueur_toit, hauteur_toit));
 
 	myEngine.setFlatColor(0.188, 0.427, 0.161);
 	myEngine.updateMvMatrix();
@@ -306,9 +336,10 @@ void drawTrain()
 	cabine();
 	// cylindre moteur
 
-	// chemin
+	// cheminee
 	myEngine.mvMatrixStack.pushMatrix();
-	myEngine.mvMatrixStack.addTranslation(Vector3D(5, 7, 2.5));
+	myEngine.mvMatrixStack.addTranslation(Vector3D(5, 7, 3.5));
+	myEngine.mvMatrixStack.addHomothety(Vector3D(0.7, 0.7, 0.7));
 	cheminee();
 	myEngine.updateMvMatrix();
 	myEngine.mvMatrixStack.popMatrix();
@@ -316,9 +347,9 @@ void drawTrain()
 	// moteur
 
 	myEngine.mvMatrixStack.pushMatrix();
-	myEngine.mvMatrixStack.addTranslation(Vector3D(5, 7, 3));
+	myEngine.mvMatrixStack.addTranslation(Vector3D(5, 8, 3.5));
 	myEngine.mvMatrixStack.addRotation(deg2rad(-90), Vector3D(1.0, 0.0, 0.0));
-
+	myEngine.mvMatrixStack.addHomothety(Vector3D(0.6, 0.6, 0.6));
 	myEngine.updateMvMatrix();
 	moteur();
 

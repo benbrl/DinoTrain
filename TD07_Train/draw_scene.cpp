@@ -55,6 +55,8 @@ Vector3D z_axe{0.0f, 0.0f, 1.0f};
 Vector3D y_axe{0.0f, 1.0f, 0.0f};
 Vector3D x_axe{1.0f, 0.0f, 0.0f};
 
+GLBI_Set_Of_Points grid_pts(3);
+
 void initScene()
 {
 	myEngine.switchToPhongShading();
@@ -73,6 +75,36 @@ void initScene()
 	myEngine.setNormalForConvex2DShape(Vector3D(0,0,1));
 
 
+	std::vector<float> gridPoints;
+	std::vector<float> gridColor;
+	for (int i = 0; i <= 10; ++i)
+	{
+		// Parallèles à l'axe x
+		gridPoints.push_back(-10 * 10 / 2.0f);
+		gridPoints.push_back(-10 * 10 / 2.0f +
+							 i * 10);
+		gridPoints.push_back(0.1f);
+		gridPoints.push_back(10 * 10 / 2.0f);
+		gridPoints.push_back(-10 * 10 / 2.0f +
+							 i * 10);
+		gridPoints.push_back(0.1f);
+
+		// Parallèles à l'axe y
+		gridPoints.push_back(-10 * 10 / 2.0f +
+							 i * 10);
+		gridPoints.push_back(-10 * 10 / 2.0f);
+		gridPoints.push_back(0.1f);
+		gridPoints.push_back(-10 * 10 / 2.0f +
+							 i * 10);
+		gridPoints.push_back(10 * 10 / 2.0f);
+		gridPoints.push_back(0.1f);
+		for (unsigned int j = 0; j < 12; ++j)
+		{
+			gridColor.push_back(0.0f);
+		}
+	}
+	grid_pts.initSet(gridPoints, gridColor);
+	grid_pts.changeNature(GL_LINES);
 
 	// debug
 	std::vector<float> carreDebug{
@@ -109,8 +141,7 @@ void initScene()
 
 	cube = basicCube(1.0f);
 	cube->createVAO();
-
-
+	
 	// alors la je suis pas sur de l'initialisrtaion , dans le tp y'a ecrit c'est automatique mais ça crash chez moi donc je sais pas voila voila
 	int width{512};
 	int height{512};
@@ -424,7 +455,7 @@ void drawRailDroite_position(int x, int y)
 void drawScene(GridConfig config)
 {
 	glPointSize(10.0);
-	// grid_pts.drawSet();
+	grid_pts.drawSet();
 
 	somePoints.drawSet();
 
@@ -436,26 +467,10 @@ void drawScene(GridConfig config)
 	ground_debug.drawShape();
 	myEngine.setFlatColor(0.2, 1.0, 0.8);
 
-	// drawRailFer();
-	// drawBalast();
-	// drawRailDroite();
-	//drawRailCourbe();
-	drawRailFerCourbe();
-	//rail_type_detect(config);
-	//drawGare();
-	//drawArbre();
-	// drawBalast();
-	// drawRailDroite();
-	// drawRailDroite_position(0, 1);
-
-	//  moteur();
 	rail_type_detect(config);
 	drawGare_position(config.origin);
+	draw_random_position_arbre(config, 10);
 	drawTrain();
-	draw_dino();
+	draw_dino_position(1, 1, -90);
 
-
-
-	
-	drawArbre();
 }

@@ -69,3 +69,6 @@ void drawGare_position(Position position);
 unsigned char *stbi_load(const char *filename, int &x, int &y, int &n, int c);
 
 void ground_position();
+
+void draw_position_arbre(int x, int y);
+void draw_random_position_arbre(GridConfig config, int nb_arbres);
