@@ -136,8 +136,7 @@ void initScene()
 
 	cube = basicCube(1.0f);
 	cube->createVAO();
-
-
+	
 	// alors la je suis pas sur de l'initialisrtaion , dans le tp y'a ecrit c'est automatique mais ça crash chez moi donc je sais pas voila voila
 	int width{512};
 	int height{512};
@@ -324,4 +323,5 @@ void drawScene(GridConfig config)
 	draw_random_position_arbre(config, 10);
 	drawTrain();
 	draw_dino_position(1, 1, -90);
+
 }
