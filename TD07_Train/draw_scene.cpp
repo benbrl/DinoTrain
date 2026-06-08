@@ -15,7 +15,7 @@ float dist_zoom{30.0};	 // Distance between origin and viewpoint
 
 GLBI_Engine myEngine;
 GLBI_Set_Of_Points somePoints(3);
-// GLBI_Convex_2D_Shape ground{3};
+GLBI_Set_Of_Points grid_pts(3);
 
 StandardMesh *ground = NULL;
 GLBI_Convex_2D_Shape ground_debug{3};
@@ -55,13 +55,12 @@ Vector3D z_axe{0.0f, 0.0f, 1.0f};
 Vector3D y_axe{0.0f, 1.0f, 0.0f};
 Vector3D x_axe{1.0f, 0.0f, 0.0f};
 
-GLBI_Set_Of_Points grid_pts(3);
-
 void initScene()
 {
 	myEngine.switchToPhongShading();
-	myEngine.setLightIntensity(Vector3D(1000,1000,1000));
-	myEngine.setLightPosition(Vector4D(0,-10,30,1));
+	myEngine.setLightIntensity(Vector3D(1000, 1000, 1000));
+	myEngine.setLightPosition(Vector4D(0, -10, 30, 1));
+
 	std::vector<float> points{0.0, 0.0, 0.0};
 	somePoints.initSet(points, 1.0, 1.0, 1.0);
 
@@ -69,11 +68,14 @@ void initScene()
 								 100.0, -100.0, 0.0,
 								 100.0, 100.0, 0.0,
 								 -100.0, 100.0, 0.0};
-	myEngine.setNormalForConvex2DShape(Vector3D(0,0,1));
-	ground.initShape(baseCarre);
-	ground.changeNature(GL_TRIANGLE_FAN);
-	myEngine.setNormalForConvex2DShape(Vector3D(0,0,1));
 
+	myEngine.setNormalForConvex2DShape(Vector3D(0, 0, 1));
+	// ground.initShape(baseCarre);
+	// ground.changeNature(GL_TRIANGLE_FAN);
+	myEngine.setNormalForConvex2DShape(Vector3D(0, 0, 1));
+
+	ground = basicRect(100.0, 100.0);
+	ground->createVAO();
 
 	std::vector<float> gridPoints;
 	std::vector<float> gridColor;
@@ -117,7 +119,6 @@ void initScene()
 	ground_debug.changeNature(GL_TRIANGLE_FAN);
 	myEngine.setNormalForConvex2DShape(Vector3D(0,0,1));
 
-
 	balast = basicCylinder(1.0f, 1.0f);
 	balast->createVAO();
 
@@ -141,7 +142,7 @@ void initScene()
 
 	cube = basicCube(1.0f);
 	cube->createVAO();
-	
+
 	// alors la je suis pas sur de l'initialisrtaion , dans le tp y'a ecrit c'est automatique mais ça crash chez moi donc je sais pas voila voila
 	int width{512};
 	int height{512};
@@ -178,11 +179,9 @@ void initScene()
 		railIntPoints1.push_back((POS_X_RAIL1 - sr / 2) * cos(angle));
 		railIntPoints1.push_back((POS_X_RAIL1 - sr / 2) * sin(angle));
 
-
 		// extérieur de la bande
 		railIntPoints1.push_back((POS_X_RAIL1 + sr / 2) * cos(angle));
 		railIntPoints1.push_back((POS_X_RAIL1 + sr / 2) * sin(angle));
-
 	}
 	Rail1.initShape(railIntPoints1);
 	Rail1.changeNature(GL_TRIANGLE_STRIP);
@@ -199,11 +198,9 @@ void initScene()
 		railIntPoints2.push_back((POS_X_RAIL2 - sr / 2) * cos(angle));
 		railIntPoints2.push_back((POS_X_RAIL2 - sr / 2) * sin(angle));
 
-
 		// extérieur de la bande
 		railIntPoints2.push_back((POS_X_RAIL2 + sr / 2) * cos(angle));
 		railIntPoints2.push_back((POS_X_RAIL2 + sr / 2) * sin(angle));
-
 	}
 	Rail2.initShape(railIntPoints2);
 	Rail2.changeNature(GL_TRIANGLE_STRIP);
@@ -227,9 +224,9 @@ void initScene()
 		CourbeAvantPoints1.push_back((POS_X_RAIL1 - sr / 2) * sin(angle));
 		CourbeAvantPoints1.push_back(sr);
 	}
-	myEngine.setNormalForConvex2DShape(Vector3D(1,0,0));
 	courbeAvant1.initShape(CourbeAvantPoints1);
 	courbeAvant1.changeNature(GL_TRIANGLE_STRIP);
+	myEngine.setNormalForConvex2DShape(Vector3D(1,0,0));
 
 	// avant 2
 	std::vector<float> CourbeAvantPoints2;
@@ -256,7 +253,6 @@ void initScene()
 		float angle = i * angleStep;
 		// dessus de la bande
 		CourbeArrierePoints1.push_back((POS_X_RAIL1 + sr / 2) * cos(angle));
-
 		CourbeArrierePoints1.push_back((POS_X_RAIL1 + sr / 2) * sin(angle));
 		CourbeArrierePoints1.push_back(0);
 
@@ -306,149 +302,15 @@ void ground_position()
 	myEngine.activateTexturing(true);
 	myTexture.attachTexture();
 	myEngine.mvMatrixStack.pushMatrix();
-	myEngine.mvMatrixStack.addTranslation(Vector3D {0.0f, 0.0f, sr});
-	myEngine.setFlatColor(0.749, 0.788, 0.82);
+	myEngine.mvMatrixStack.addRotation(deg2rad(90), Vector3D(1.0, 0.0, 0.0));
+	myEngine.mvMatrixStack.addRotation(deg2rad(90), Vector3D(0.0, 1.0, 0.0));
+
+	myEngine.mvMatrixStack.addTranslation(Vector3D(-50, 0, -50));
 	myEngine.updateMvMatrix();
-	Rail1.drawShape();
-	Rail2.drawShape();
+	ground->draw();
 
-	// Dessus
-	
-	myEngine.mvMatrixStack.addTranslation(Vector3D{0.0f, 0.0f, sr});
-	myEngine.updateMvMatrix();
-	Rail1.drawShape();
-	Rail2.drawShape();
-	myEngine.mvMatrixStack.popMatrix();
-
-	// carré 1 x
-	myEngine.mvMatrixStack.pushMatrix();
-	myEngine.mvMatrixStack.addTranslation(Vector3D(0.0f, POS_X_RAIL1 - sr / 2.0f, rr));
-	myEngine.mvMatrixStack.addRotation(-M_PI / 2.0f, y_axe);
-	myEngine.mvMatrixStack.addHomothety(Vector3D(sr, sr, 1.0f));
-	myEngine.updateMvMatrix();
-	carre.drawShape();
-	myEngine.mvMatrixStack.popMatrix();
-
-	// carré 2 x
-	myEngine.mvMatrixStack.pushMatrix();
-	myEngine.mvMatrixStack.addTranslation(Vector3D(0.0f, POS_X_RAIL2 - sr / 2.0f, rr));
-	myEngine.mvMatrixStack.addRotation(-M_PI / 2.0f, y_axe);
-	myEngine.mvMatrixStack.addHomothety(Vector3D(sr, sr, 1.0f));
-	myEngine.updateMvMatrix();
-	carre.drawShape();
-	myEngine.mvMatrixStack.popMatrix();
-
-	// carré 1 y
-	myEngine.mvMatrixStack.pushMatrix();
-	myEngine.mvMatrixStack.addTranslation(Vector3D(POS_X_RAIL1 - sr / 2.0f, 0.0f, 2 * rr));
-	myEngine.mvMatrixStack.addRotation(-M_PI / 2.0f, x_axe);
-	myEngine.mvMatrixStack.addHomothety(Vector3D(sr, sr, 1.0f));
-	myEngine.updateMvMatrix();
-	carre.drawShape();
-	myEngine.mvMatrixStack.popMatrix();
-
-	// carré 2 y
-	myEngine.mvMatrixStack.pushMatrix();
-	myEngine.mvMatrixStack.addTranslation(Vector3D(POS_X_RAIL2 - sr / 2.0f, 0.0f, 2 * rr));
-	myEngine.mvMatrixStack.addRotation(-M_PI / 2.0f, x_axe);
-	myEngine.mvMatrixStack.addHomothety(Vector3D(sr, sr, 1.0f));
-	myEngine.updateMvMatrix();
-	carre.drawShape();
-	myEngine.mvMatrixStack.popMatrix();
-
-	// milieu
-	myEngine.mvMatrixStack.pushMatrix();
-	myEngine.mvMatrixStack.addTranslation(Vector3D(0,0,sr));
-	myEngine.updateMvMatrix();
-	courbeAvant1.drawShape();
-	courbeArriere1.drawShape();
-	courbeAvant2.drawShape();
-	courbeArriere2.drawShape();
-	myEngine.mvMatrixStack.popMatrix();
-	myEngine.mvMatrixStack.popMatrix();
-
-	
-}
-
-void drawRailDroite()
-{
-
-	// premier
-
-	for (int i = 0; i < 5; ++i)
-	{
-		myEngine.mvMatrixStack.pushMatrix();
-
-		myEngine.mvMatrixStack.addTranslation(Vector3D(sx + i * (2.0f * sx + rr), 2.0f, 0));
-
-		drawBalast();
-
-		myEngine.mvMatrixStack.popMatrix();
-	}
-
-	// rail fer droite
-	myEngine.mvMatrixStack.pushMatrix();
-	myEngine.mvMatrixStack.addRotation(deg2rad(90), Vector3D(0.0, 0.0, 1.0));
-	// myEngine.mvMatrixStack.addTranslation(Vector3D(POS_X_RAIL1, -axe_y / 2 + sx * 2, rr));
-	myEngine.mvMatrixStack.addTranslation(Vector3D(POS_X_RAIL1, -axe_y / 2 + sx / 4, rr));
-	drawRailFer();
-	myEngine.mvMatrixStack.popMatrix();
-
-	// rail fer gauche
-
-	myEngine.mvMatrixStack.pushMatrix();
-	myEngine.mvMatrixStack.addRotation(deg2rad(90), Vector3D(0.0, 0.0, 1.0));
-	myEngine.mvMatrixStack.addTranslation(Vector3D(POS_X_RAIL2, -axe_y / 2 + sx / 4, rr));
-	drawRailFer();
-	myEngine.mvMatrixStack.popMatrix();
-}
-
-void drawRailCourbe()
-{
-	myEngine.mvMatrixStack.pushMatrix();
-	myEngine.mvMatrixStack.addRotation(-M_PI / 2, z_axe);
-
-	// Les 3 balast
-	myEngine.mvMatrixStack.pushMatrix();
-	float angle = M_PI / 6;
-	myEngine.mvMatrixStack.addRotation(M_PI / 12, z_axe);
-
-	for (int i = 0; i < 3; ++i)
-	{
-		myEngine.mvMatrixStack.pushMatrix();
-		myEngine.mvMatrixStack.addRotation(angle * i, z_axe);
-		Vector3D trans2{0.0f, 2.0f, 0.0f};
-		myEngine.mvMatrixStack.addTranslation(trans2);
-		drawBalast();
-
-		myEngine.mvMatrixStack.popMatrix();
-	}
-	myEngine.mvMatrixStack.popMatrix();
-	myEngine.mvMatrixStack.popMatrix();
-
-	// rail courbé int
-	myEngine.mvMatrixStack.pushMatrix();
-	drawRailFerCourbe();
-	myEngine.mvMatrixStack.popMatrix();
-}
-
-
-
-//void drawScene()
-// WIP mettre float/int rotation apres
-void drawRailDroite_position(int x, int y)
-{
-	std::cout << "---------------- position rails ---------------" << std::endl;
-
-	std::cout << x << std::endl;
-	std::cout << y << std::endl;
-
-	myEngine.mvMatrixStack.pushMatrix();
-
-	myEngine.mvMatrixStack.addTranslation(Vector3D(y * 10, x * 10, 0));
-
-	drawRailDroite();
-
+	myTexture.detachTexture();
+	myEngine.activateTexturing(false);
 	myEngine.mvMatrixStack.popMatrix();
 }
 
@@ -469,8 +331,7 @@ void drawScene(GridConfig config)
 
 	rail_type_detect(config);
 	drawGare_position(config.origin);
-	draw_random_position_arbre(config, 10);
 	drawTrain();
 	draw_dino_position(1, 1, -90);
-
+	draw_random_position_arbre(config, 10);
 }
