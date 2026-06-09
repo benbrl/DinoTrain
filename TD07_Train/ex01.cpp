@@ -87,7 +87,6 @@ void onKey(GLFWwindow *window, int key, int /*scancode*/, int action, int /*mods
     right = (front_vector ^ up_vector);
     right.normalize();
     break;
-
 	case GLFW_KEY_S:
     a -= b;
     front_vector = Vector3D(cos(a), -sin(a), 0);
