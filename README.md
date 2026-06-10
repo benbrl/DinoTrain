@@ -1,7 +1,75 @@
 # Dino Train
 
-Projet réalisé dans le cadre du cours de synthèse d'image - IMAC E3
+Projet réalisé par Benoît Baraille et Jade Riesen dans le cadre du cours de synthèse d'image - IMAC E3
 
-## Resultat
 
-![Resultat](assets/screenshots/result_wip.png)
+
+# Résultat
+
+![Résultat](assets/screenshots/result_wip.png)
+
+# Compilation et exécution
+
+## Lancement du programme
+
+1. Compiler le projet.
+2. Se rendre dans le répertoire `/bin`.
+3. Exécuter la commande `./TD07_Train_ex01` en lui passant le chemin vers le fichier JSON en argument.
+
+> **Remarque :** la prise en charge du chemin JSON est encore en cours de développement et n'est pas totalement fonctionnelle.
+
+Le projet a été développé sous **macOS**, mais il est également prévu pour être compilé sous Windows et Linux.
+
+## En cas de problème de compilation
+
+Si la compilation échoue, vérifiez que les lignes **143 à 146** du fichier : `TD07_Train/ex01.cpp` sont bien commentées. (Normalement, ces lignes devraient déjà être commentées.)
+
+# Commandes utilisateur
+## Déplacements de la caméra
+
+| Touche | Action                               |
+| ------ | ------------------------------------ |
+| ↑      | Avancer la caméra                    |
+| ↓      | Reculer la caméra                    |
+| ←      | Déplacer la caméra vers la gauche    |
+| →      | Déplacer la caméra vers la droite    |
+| D      | Rotation de la caméra vers la droite |
+| S      | Rotation de la caméra vers la gauche |
+| R      | Zoom avant                           |
+| T      | Zoom arrière                         |
+
+## Modes d'affichage
+
+| Touche | Action                                   |
+| ------ | ---------------------------------------- |
+| L      | Affichage en mode fil de fer (Wireframe) |
+| P      | Affichage en mode plein (Filled)         |
+
+## Modes d'éclairage
+
+| Touche | Action                     |
+| ------ | -------------------------- |
+| B      | Activer l'ombrage de Phong |
+| F      | Activer l'ombrage Flat     |
+
+## Quitter l'application
+
+| Touche     | Action               |
+| ---------- | -------------------- |
+| Echap ou Q | Fermer l'application |
+
+# Fonctionnalités implémentées
+
+- Caméra de type FPV.
+- Suivi d'un trajet défini à partir d'un fichier JSON.
+- Génération de rails droits et courbés conformément au cahier des charges.
+- Création d'un train inspiré de l'univers Dino Train.
+- Gestion de l'éclairage de la scène.
+- Modélisation d'une gare.
+- Création d'un dinosaure inspiré du *Tiny Pteranodon* de Dino Train.
+- Ajout d'une texture d'herbe sur le terrain.
+
+## Améliorations
+- Génération d'arbres avec tailles et positions aléatoires.
+
+# Merci !
