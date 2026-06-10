@@ -2,8 +2,6 @@
 
 Projet réalisé par Benoît Baraille et Jade Riesen dans le cadre du cours de synthèse d'image - IMAC E3
 
-
-
 # Résultat
 
 ![Résultat](assets/screenshots/result_wip.png)
@@ -35,8 +33,6 @@ Si la compilation échoue, vérifiez que les lignes **143 à 146** du fichier : 
 | →      | Déplacer la caméra vers la droite    |
 | D      | Rotation de la caméra vers la droite |
 | S      | Rotation de la caméra vers la gauche |
-| R      | Zoom avant                           |
-| T      | Zoom arrière                         |
 
 ## Modes d'affichage
 
@@ -60,7 +56,7 @@ Si la compilation échoue, vérifiez que les lignes **143 à 146** du fichier : 
 
 # Fonctionnalités implémentées
 
-- Caméra de type FPV.
+- Caméra de type FPS.
 - Suivi d'un trajet défini à partir d'un fichier JSON.
 - Génération de rails droits et courbés conformément au cahier des charges.
 - Création d'un train inspiré de l'univers Dino Train.
