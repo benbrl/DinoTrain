@@ -60,6 +60,7 @@ void draw_corps()
     myEngine.mvMatrixStack.popMatrix();
 
     // aile 1
+
     if (flagAnim)
     {
         nb_ms_elapsed = glfwGetTime() * 1000.0 - nb_ms_save;
@@ -187,9 +188,12 @@ void draw_dino()
     myEngine.mvMatrixStack.popMatrix();
 }
 
-void draw_dino_position(int x, int y, int rotation)
+void draw_dino_position(GridConfig config)
 {
 
+    int x = config.dinosaure.position.x;
+    int y = config.dinosaure.position.y;
+    int rotation = config.dinosaure.rotation;
     myEngine.mvMatrixStack.popMatrix();
     myEngine.mvMatrixStack.pushMatrix();
 

@@ -37,10 +37,11 @@ Si la compilation échoue, vérifiez que les lignes **143 à 146** du fichier : 
 
 ## Modes d'affichage
 
-| Touche | Action                                   |
-| ------ | ---------------------------------------- |
-| L      | Affichage en mode fil de fer (Wireframe) |
-| P      | Affichage en mode plein (Filled)         |
+| Touche | Action                                        |
+| ------ | --------------------------------------------- |
+| L      | Affichage en mode fil de fer (Wireframe)      |
+| P      | Affichage en mode plein (Filled)              |
+| Espace | Lancement de l'animation du bras du dinosaure |
 
 ## Modes d'éclairage
 
@@ -69,6 +70,35 @@ Si la compilation échoue, vérifiez que les lignes **143 à 146** du fichier : 
 ## Améliorations
 
 - Génération d'arbres avec tailles et positions aléatoires.
+
+## Changement JSON
+
+```json
+{
+  "size_grid": 10,
+  "origin": [-1, 0],
+  "arbres": 10,
+  "dinosaure": [1, 1, -90],
+  "path": [
+    [0, -1],
+    [0, -2],
+    [-1, -2],
+    [-2, -2],
+    [-3, -2],
+    [-4, -2],
+    [-4, -1],
+    [-3, -1],
+    [-3, 0],
+    [-3, 1],
+    [-2, 1],
+    [-1, 1],
+    [0, 1],
+    [0, 0]
+  ]
+}
+```
+
+Vous pouvez désormais ajouter la position du dinosaure ainsi que le nombre d’arbres souhaité.
 
 # Merci !
 

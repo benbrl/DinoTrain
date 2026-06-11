@@ -6,4 +6,4 @@ extern unsigned int nb_ms_elapsed;
 extern unsigned int nb_ms_save;
 
 void draw_dino();
-void draw_dino_position(int x, int y, int rotation);
+void draw_dino_position(GridConfig config);

@@ -11,11 +11,19 @@ struct Position
     int y{0};
 };
 
+struct Dinosaure
+{
+    Position position;
+    int rotation{0};
+};
+
 void to_json(nlohmann::json &json, const Position &position);
 
 struct GridConfig
 {
     int size_grid{0};
+    int arbres{0};
+    Dinosaure dinosaure{};
     Position origin{};
     std::vector<Position> path{};
 };
