@@ -117,7 +117,7 @@ void initScene()
 
 	ground_debug.initShape(carreDebug);
 	ground_debug.changeNature(GL_TRIANGLE_FAN);
-	myEngine.setNormalForConvex2DShape(Vector3D(0,0,1));
+	myEngine.setNormalForConvex2DShape(Vector3D(0, 0, 1));
 
 	balast = basicCylinder(1.0f, 1.0f);
 	balast->createVAO();
@@ -185,8 +185,7 @@ void initScene()
 	}
 	Rail1.initShape(railIntPoints1);
 	Rail1.changeNature(GL_TRIANGLE_STRIP);
-	myEngine.setNormalForConvex2DShape(Vector3D(0,0,1));
-
+	myEngine.setNormalForConvex2DShape(Vector3D(0, 0, 1));
 
 	// courbes du haut et du bas pour rail 2
 	std::vector<float> railIntPoints2;
@@ -204,8 +203,7 @@ void initScene()
 	}
 	Rail2.initShape(railIntPoints2);
 	Rail2.changeNature(GL_TRIANGLE_STRIP);
-	myEngine.setNormalForConvex2DShape(Vector3D(0,0,1));
-
+	myEngine.setNormalForConvex2DShape(Vector3D(0, 0, 1));
 
 	// courbes des côtés
 
@@ -226,7 +224,7 @@ void initScene()
 	}
 	courbeAvant1.initShape(CourbeAvantPoints1);
 	courbeAvant1.changeNature(GL_TRIANGLE_STRIP);
-	myEngine.setNormalForConvex2DShape(Vector3D(1,0,0));
+	myEngine.setNormalForConvex2DShape(Vector3D(1, 0, 0));
 
 	// avant 2
 	std::vector<float> CourbeAvantPoints2;

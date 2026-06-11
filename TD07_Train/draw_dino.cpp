@@ -106,7 +106,7 @@ void draw_tete()
     myEngine.mvMatrixStack.addRotation(deg2rad(130), Vector3D(1.0, 0.0, 0.0));
     myEngine.mvMatrixStack.addHomothety(Vector3D(0.3, 1.5, 0.5));
     myEngine.mvMatrixStack.addTranslation(Vector3D(0, 0.5, 0));
-    myEngine.setFlatColor(1, 1, 1);
+    myEngine.setFlatColor(0.357, 0.494, 0.235);
     myEngine.updateMvMatrix();
     cone->draw();
     myEngine.mvMatrixStack.popMatrix();
@@ -166,6 +166,16 @@ void draw_dino()
     myEngine.mvMatrixStack.addTranslation(Vector3D(0, 0, 4.2));
     myEngine.mvMatrixStack.addHomothety(Vector3D(0.6, 0.6, 0.6));
     draw_tete();
+    myEngine.mvMatrixStack.popMatrix();
+
+    // petit queue
+    myEngine.mvMatrixStack.pushMatrix();
+    myEngine.mvMatrixStack.addRotation(deg2rad(160), Vector3D(1.0, 0.0, 0.0));
+    myEngine.mvMatrixStack.addHomothety(Vector3D(0.3, 1.5, 0.5));
+    myEngine.mvMatrixStack.addTranslation(Vector3D(0, 0.5, -3));
+    myEngine.setFlatColor(0.357, 0.494, 0.235);
+    myEngine.updateMvMatrix();
+    cone->draw();
     myEngine.mvMatrixStack.popMatrix();
 }
 
