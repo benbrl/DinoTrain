@@ -63,17 +63,16 @@ void drawRailFerCourbe()
 {
     // Dessous
     myEngine.mvMatrixStack.pushMatrix();
-    // myEngine.mvMatrixStack.addRotation(M_PI / 2.0f, z_axe);
-    Vector3D trans3{0.0f, 0.0f, sr};
-    myEngine.mvMatrixStack.addTranslation(trans3);
+    myEngine.mvMatrixStack.addTranslation(Vector3D{0.0f, 0.0f, sr});
     myEngine.setFlatColor(0.749, 0.788, 0.82);
+    myEngine.setNormalForConvex2DShape(-z_axe);
     myEngine.updateMvMatrix();
     Rail1.drawShape();
     Rail2.drawShape();
 
     // Dessus
-    Vector3D trans4{0.0f, 0.0f, sr};
-    myEngine.mvMatrixStack.addTranslation(trans4);
+    myEngine.mvMatrixStack.addTranslation(Vector3D{0.0f, 0.0f, sr});
+    myEngine.setNormalForConvex2DShape(z_axe);
     myEngine.updateMvMatrix();
     Rail1.drawShape();
     Rail2.drawShape();
@@ -84,6 +83,7 @@ void drawRailFerCourbe()
     myEngine.mvMatrixStack.addTranslation(Vector3D(0.0f, POS_X_RAIL1 - sr / 2.0f, rr));
     myEngine.mvMatrixStack.addRotation(-M_PI / 2.0f, y_axe);
     myEngine.mvMatrixStack.addHomothety(Vector3D(sr, sr, 1.0f));
+    myEngine.setNormalForConvex2DShape(x_axe);
     myEngine.updateMvMatrix();
     carre.drawShape();
     myEngine.mvMatrixStack.popMatrix();
@@ -102,6 +102,7 @@ void drawRailFerCourbe()
     myEngine.mvMatrixStack.addTranslation(Vector3D(POS_X_RAIL1 - sr / 2.0f, 0.0f, 2 * rr));
     myEngine.mvMatrixStack.addRotation(-M_PI / 2.0f, x_axe);
     myEngine.mvMatrixStack.addHomothety(Vector3D(sr, sr, 1.0f));
+    myEngine.setNormalForConvex2DShape(-y_axe);
     myEngine.updateMvMatrix();
     carre.drawShape();
     myEngine.mvMatrixStack.popMatrix();
@@ -118,10 +119,13 @@ void drawRailFerCourbe()
     // milieu
     myEngine.mvMatrixStack.pushMatrix();
     myEngine.mvMatrixStack.addTranslation(Vector3D(0, 0, sr));
+    myEngine.setNormalForConvex2DShape(Vector3D{-cos(1.0f),-sin(1.0f),0.0f});
     myEngine.updateMvMatrix();
     courbeAvant1.drawShape();
-    courbeArriere1.drawShape();
     courbeAvant2.drawShape();
+    myEngine.setNormalForConvex2DShape(Vector3D{cos(1.0f), sin(1.0f),0.0f});
+    myEngine.updateMvMatrix();
+    courbeArriere1.drawShape();
     courbeArriere2.drawShape();
     myEngine.mvMatrixStack.popMatrix();
 

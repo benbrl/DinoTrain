@@ -44,7 +44,7 @@ float lastFrame = 0.0f;
 // lastFrame          = currentFrame;
 float deltaTime = 1.0f;
 float a{0};
-float b = M_PI / 12.0f;
+float b = M_PI/24.0f;
 float cameraSpeed = 2.5f * deltaTime;
 Vector3D right = (front_vector ^ up_vector);
 
@@ -70,6 +70,8 @@ void onKey(GLFWwindow *window, int key, int /*scancode*/, int action, int /*mods
 	case GLFW_KEY_P:
 		if (is_pressed)
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		break;
+
 	case GLFW_KEY_UP:
 		pos_camera += front_vector * cameraSpeed;
 		break;
@@ -83,13 +85,17 @@ void onKey(GLFWwindow *window, int key, int /*scancode*/, int action, int /*mods
 		pos_camera += right * cameraSpeed;
 		break;
 	case GLFW_KEY_D:
-		a += b;
-		front_vector = Vector3D(cos(a), -sin(a), 0);
-		break;
+    a += b;
+    front_vector = Vector3D(cos(a), -sin(a), 0);
+    right = (front_vector ^ up_vector);
+    right.normalize();
+    break;
 	case GLFW_KEY_S:
-		a -= b;
-		front_vector = Vector3D(cos(a), -sin(a), 0);
-		break;
+    a -= b;
+    front_vector = Vector3D(cos(a), -sin(a), 0);
+    right = (front_vector ^ up_vector);
+    right.normalize();
+    break;
 	case GLFW_KEY_R:
 		dist_zoom -= 0.9;
 		break;

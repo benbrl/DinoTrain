@@ -58,9 +58,10 @@ Vector3D x_axe{1.0f, 0.0f, 0.0f};
 void initScene()
 {
 	myEngine.switchToPhongShading();
-	myEngine.setLightIntensity(Vector3D(1000, 1000, 1000));
-	myEngine.setLightPosition(Vector4D(0, -10, 30, 1));
-
+	myEngine.setLightIntensity(Vector3D(1, 1, 1),0);
+	myEngine.setLightPosition(Vector4D(0.7f, -0.3f, 1.0f, 0), 0);
+	myEngine.addALight(Vector4D(5.0f, 10.0f, 4.5f, 1.0f),Vector3D(50.0f, 50.0f, 10.0f));
+	
 	std::vector<float> points{0.0, 0.0, 0.0};
 	somePoints.initSet(points, 1.0, 1.0, 1.0);
 
@@ -69,10 +70,6 @@ void initScene()
 								 100.0, 100.0, 0.0,
 								 -100.0, 100.0, 0.0};
 
-	myEngine.setNormalForConvex2DShape(Vector3D(0, 0, 1));
-	// ground.initShape(baseCarre);
-	// ground.changeNature(GL_TRIANGLE_FAN);
-	myEngine.setNormalForConvex2DShape(Vector3D(0, 0, 1));
 
 	ground = basicRect(100.0, 100.0);
 	ground->createVAO();
@@ -117,7 +114,6 @@ void initScene()
 
 	ground_debug.initShape(carreDebug);
 	ground_debug.changeNature(GL_TRIANGLE_FAN);
-	myEngine.setNormalForConvex2DShape(Vector3D(0, 0, 1));
 
 	balast = basicCylinder(1.0f, 1.0f);
 	balast->createVAO();
@@ -185,7 +181,7 @@ void initScene()
 	}
 	Rail1.initShape(railIntPoints1);
 	Rail1.changeNature(GL_TRIANGLE_STRIP);
-	myEngine.setNormalForConvex2DShape(Vector3D(0, 0, 1));
+
 
 	// courbes du haut et du bas pour rail 2
 	std::vector<float> railIntPoints2;
@@ -203,7 +199,7 @@ void initScene()
 	}
 	Rail2.initShape(railIntPoints2);
 	Rail2.changeNature(GL_TRIANGLE_STRIP);
-	myEngine.setNormalForConvex2DShape(Vector3D(0, 0, 1));
+
 
 	// courbes des côtés
 
@@ -224,7 +220,6 @@ void initScene()
 	}
 	courbeAvant1.initShape(CourbeAvantPoints1);
 	courbeAvant1.changeNature(GL_TRIANGLE_STRIP);
-	myEngine.setNormalForConvex2DShape(Vector3D(1, 0, 0));
 
 	// avant 2
 	std::vector<float> CourbeAvantPoints2;
@@ -304,6 +299,7 @@ void ground_position()
 	myEngine.mvMatrixStack.addRotation(deg2rad(90), Vector3D(0.0, 1.0, 0.0));
 
 	myEngine.mvMatrixStack.addTranslation(Vector3D(-50, 0, -50));
+	myEngine.setNormalForConvex2DShape(z_axe);
 	myEngine.updateMvMatrix();
 	ground->draw();
 
@@ -320,7 +316,6 @@ void drawScene(GridConfig config)
 	somePoints.drawSet();
 
 	myEngine.setFlatColor(0.435, 0.812, 0.592);
-
 	ground_position();
 
 	myEngine.setFlatColor(1, 0.984, 0);
