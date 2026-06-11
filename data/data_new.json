@@ -1,6 +1,8 @@
 {
   "size_grid": 10,
   "origin": [-1, 0],
+  "arbres": 10,
+  "dinosaure": [1, 1, -90],
   "path": [
     [0, -1],
     [0, -2],

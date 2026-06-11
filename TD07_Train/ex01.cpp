@@ -35,20 +35,23 @@ void onWindowResized(GLFWwindow * /*window*/, int width, int height)
 	myEngine.set3DProjection(90.0, aspectRatio, Z_NEAR, Z_FAR);
 }
 
-Vector3D pos_camera   = Vector3D(0, 0,  10);
+Vector3D pos_camera = Vector3D(0, 0, 10);
 Vector3D front_vector = Vector3D(0.0f, 1.0f, 0.0f);
-Vector3D up_vector    = Vector3D(0.0f, 0.0f,  1.0f);
+Vector3D up_vector = Vector3D(0.0f, 0.0f, 1.0f);
 float lastFrame = 0.0f;
 // float currentFrame = glfwGetTime();
 // float deltaTime    = currentFrame - lastFrame;
 // lastFrame          = currentFrame;
-float deltaTime    = 1.0f;
+float deltaTime = 1.0f;
 float a{0};
 float b = M_PI/24.0f;
 float cameraSpeed = 2.5f * deltaTime;
 Vector3D right = (front_vector ^ up_vector);
 
-
+// animation aile dino
+bool flagAnim = true;
+unsigned int nb_ms_elapsed = 0;
+unsigned int nb_ms_save = 0;
 
 void onKey(GLFWwindow *window, int key, int /*scancode*/, int action, int /*mods*/)
 {
@@ -104,6 +107,15 @@ void onKey(GLFWwindow *window, int key, int /*scancode*/, int action, int /*mods
 		break;
 	case GLFW_KEY_F:
 		myEngine.switchToFlatShading();
+		break;
+	case GLFW_KEY_SPACE:
+		if (is_pressed)
+		{
+			flagAnim = !flagAnim;
+			std::cout << "Animation : " << ((flagAnim) ? "ON" : "OFF") << std::endl;
+			if (flagAnim)
+				nb_ms_save = glfwGetTime() * 1000.0 - nb_ms_elapsed;
+		}
 		break;
 
 	default:
@@ -190,7 +202,6 @@ int main(int /*argc*/, char ** /*argv*/)
 
 	double elapsedTime{0.0};
 
-
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
@@ -203,13 +214,12 @@ int main(int /*argc*/, char ** /*argv*/)
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glEnable(GL_DEPTH_TEST);
 
-		 	
-myEngine.mvMatrixStack.loadIdentity();
-Matrix4D viewMatrix = Matrix4D::lookAt(pos_camera, pos_camera + front_vector, up_vector);
-myEngine.setViewMatrix(viewMatrix);
-myEngine.updateMvMatrix();
+		myEngine.mvMatrixStack.loadIdentity();
+		Matrix4D viewMatrix = Matrix4D::lookAt(pos_camera, pos_camera + front_vector, up_vector);
+		myEngine.setViewMatrix(viewMatrix);
+		myEngine.updateMvMatrix();
 
-drawScene(config);
+		drawScene(config);
 
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);

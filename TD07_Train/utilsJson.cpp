@@ -11,10 +11,24 @@ inline void to_json(nlohmann::json &json, const Position &position)
     json = nlohmann::json{position.x, position.y};
 }
 
+void from_json(const nlohmann::json &json, Dinosaure &dinosaure)
+{
+    json.at(0).get_to(dinosaure.position.x);
+    json.at(1).get_to(dinosaure.position.y);
+    json.at(2).get_to(dinosaure.rotation);
+}
+
+void to_json(nlohmann::json &json, const Dinosaure &dinosaure)
+{
+    json = nlohmann::json{dinosaure.position.x, dinosaure.position.y, dinosaure.rotation};
+}
+
 void from_json(const nlohmann::json &json, GridConfig &g)
 {
     json.at("size_grid").get_to(g.size_grid);
     json.at("origin").get_to(g.origin);
+    json.at("arbres").get_to(g.arbres);
+    json.at("dinosaure").get_to(g.dinosaure);
     json.at("path").get_to(g.path);
 }
 
@@ -23,6 +37,8 @@ void to_json(nlohmann::json &json, const GridConfig &g)
     json = nlohmann::json{
         {"size_grid", g.size_grid},
         {"origin", g.origin},
+        {"arbres", g.arbres},
+        {"dinosaure", g.dinosaure},
         {"path", g.path}};
 }
 

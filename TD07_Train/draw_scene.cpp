@@ -325,6 +325,6 @@ void drawScene(GridConfig config)
 	rail_type_detect(config);
 	drawGare_position(config.origin);
 	drawTrain();
-	draw_dino_position(1, 1, -90);
-	draw_random_position_arbre(config, 10);
+	draw_dino_position(config);
+	draw_random_position_arbre(config);
 }

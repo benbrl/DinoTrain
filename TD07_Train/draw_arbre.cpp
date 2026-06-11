@@ -61,7 +61,7 @@ void liste_position_arbre(GridConfig config, int nb_arbres)
         int arbre_position_x = rand() % 10 - 5;
         int arbre_position_y = rand() % 10 - 5;
 
-        //minimum de taille 2
+        // minimum de taille 2
         int taille = rand() % 5 + 2;
 
         bool isRail = false;
@@ -97,8 +97,10 @@ void draw_position_arbre(int arbre_position_x, int arbre_position_y, int taille_
     myEngine.mvMatrixStack.popMatrix();
 }
 
-void draw_random_position_arbre(GridConfig config, int nb_arbres)
+void draw_random_position_arbre(GridConfig config)
 {
+
+    int nb_arbres = config.arbres;
     // genere une fois la liste pour pas de nouveau random 60 fois/s
     if (liste_arbres.empty())
     {
