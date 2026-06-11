@@ -64,7 +64,6 @@ void draw_corps()
     myEngine.mvMatrixStack.addHomothety(Vector3D(3, 3, 1.5));
     myEngine.mvMatrixStack.addRotation(deg2rad(-90), Vector3D(1, 0, 0));
     myEngine.mvMatrixStack.addRotation(deg2rad(-90), Vector3D(0, 0, 1));
-
     myEngine.updateMvMatrix();
     triangle.drawShape();
     myEngine.mvMatrixStack.popMatrix();

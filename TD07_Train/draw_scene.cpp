@@ -58,7 +58,7 @@ Vector3D x_axe{1.0f, 0.0f, 0.0f};
 void initScene()
 {
 	myEngine.switchToPhongShading();
-	myEngine.setLightIntensity(Vector3D(10000, 10000, 10000));
+	myEngine.setLightIntensity(Vector3D(1000, 1000, 1000));
 	myEngine.setLightPosition(Vector4D(0, 0, 20, 1));
 
 	std::vector<float> points{0.0, 0.0, 0.0};

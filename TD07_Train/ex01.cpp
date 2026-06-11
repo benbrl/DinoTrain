@@ -44,7 +44,7 @@ float lastFrame = 0.0f;
 // lastFrame          = currentFrame;
 float deltaTime    = 1.0f;
 float a{0};
-float b = M_PI/12.0f;
+float b = M_PI/24.0f;
 float cameraSpeed = 2.5f * deltaTime;
 Vector3D right = (front_vector ^ up_vector);
 
