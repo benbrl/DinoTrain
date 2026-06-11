@@ -1,4 +1,4 @@
-# Dino Train
+# Dino Train 🦖🚞
 
 Projet réalisé par Benoît Baraille et Jade Riesen dans le cadre du cours de synthèse d'image - IMAC E3
 
@@ -23,6 +23,7 @@ Le projet a été développé sous **macOS**, mais il est également prévu pour
 Si la compilation échoue, vérifiez que les lignes **143 à 146** du fichier : `TD07_Train/ex01.cpp` sont bien commentées. (Normalement, ces lignes devraient déjà être commentées.)
 
 # Commandes utilisateur
+
 ## Déplacements de la caméra
 
 | Touche | Action                               |
@@ -62,10 +63,13 @@ Si la compilation échoue, vérifiez que les lignes **143 à 146** du fichier : 
 - Création d'un train inspiré de l'univers Dino Train.
 - Gestion de l'éclairage de la scène.
 - Modélisation d'une gare.
-- Création d'un dinosaure inspiré du *Tiny Pteranodon* de Dino Train.
+- Création d'un dinosaure inspiré du _Tiny Pteranodon_ de Dino Train.
 - Ajout d'une texture d'herbe sur le terrain.
 
 ## Améliorations
+
 - Génération d'arbres avec tailles et positions aléatoires.
 
 # Merci !
+
+![Merci version Dino Train](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExdXVkbzNnMjF1eWFlOWdka3p6NDh6bncxOXR3d2Z6NXk4YmQ3a2JociZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Z9EBltBRPHxExkS8f3/giphy.gif)
