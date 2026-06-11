@@ -42,10 +42,12 @@ void to_json(nlohmann::json &json, const GridConfig &g)
         {"path", g.path}};
 }
 
-GridConfig read_json()
+GridConfig read_json(int argc, char *argv[])
 {
+    const std::string input_path{(argc >= 2) ? argv[1] : "../data/data_new.json"};
 
-    std::ifstream data("../data/data_new.json");
+
+    std::ifstream data(input_path);
 
     if (!data)
     {

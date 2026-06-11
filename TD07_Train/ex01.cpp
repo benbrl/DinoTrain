@@ -44,7 +44,7 @@ float lastFrame = 0.0f;
 // lastFrame          = currentFrame;
 float deltaTime = 1.0f;
 float a{0};
-float b = M_PI/24.0f;
+float b = M_PI / 24.0f;
 float cameraSpeed = 2.5f * deltaTime;
 Vector3D right = (front_vector ^ up_vector);
 
@@ -85,17 +85,17 @@ void onKey(GLFWwindow *window, int key, int /*scancode*/, int action, int /*mods
 		pos_camera += right * cameraSpeed;
 		break;
 	case GLFW_KEY_D:
-    a += b;
-    front_vector = Vector3D(cos(a), -sin(a), 0);
-    right = (front_vector ^ up_vector);
-    right.normalize();
-    break;
+		a += b;
+		front_vector = Vector3D(cos(a), -sin(a), 0);
+		right = (front_vector ^ up_vector);
+		right.normalize();
+		break;
 	case GLFW_KEY_S:
-    a -= b;
-    front_vector = Vector3D(cos(a), -sin(a), 0);
-    right = (front_vector ^ up_vector);
-    right.normalize();
-    break;
+		a -= b;
+		front_vector = Vector3D(cos(a), -sin(a), 0);
+		right = (front_vector ^ up_vector);
+		right.normalize();
+		break;
 	case GLFW_KEY_R:
 		dist_zoom -= 0.9;
 		break;
@@ -133,7 +133,7 @@ void onMouseButton(GLFWwindow *window, int button, int action, int /*mods*/)
 	}
 }
 
-int main(int /*argc*/, char ** /*argv*/)
+int main(int argc, char **argv)
 {
 
 	std::string ascii = R"(
@@ -149,7 +149,7 @@ int main(int /*argc*/, char ** /*argv*/)
 	std::cout << ascii << std::endl;
 
 	GridConfig config;
-	config = read_json();
+	config = read_json(argc, argv);
 
 	/* GLFW initialisation */
 	GLFWwindow *

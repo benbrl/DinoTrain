@@ -12,9 +12,12 @@ Projet réalisé par Benoît Baraille et Jade Riesen dans le cadre du cours de s
 
 1. Compiler le projet.
 2. Se rendre dans le répertoire `/bin`.
-3. Exécuter la commande `./TD07_Train_ex01` en lui passant le chemin vers le fichier JSON en argument.
+3. Exécuter la commande `./TD07_Train_ex01` en lui passant le chemin vers un fichier JSON en argument.
 
-> **Remarque :** la prise en charge du chemin JSON est encore en cours de développement et n'est pas totalement fonctionnelle.
+**Exemple :**
+`./TD07_Train_ex01 ../data/data_new.json`
+
+À noter que si aucun chemin n’est renseigné, un fallback automatique est appliqué et le programme utilise le fichier `data_new.json`.
 
 Le projet a été développé sous **macOS**, mais il est également prévu pour être compilé sous Windows et Linux.
 

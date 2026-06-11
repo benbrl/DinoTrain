@@ -31,7 +31,7 @@ struct GridConfig
 void from_json(const nlohmann::json &json, GridConfig &g);
 void to_json(nlohmann::json &json, const GridConfig &g);
 
-GridConfig read_json();
+GridConfig read_json(int argc, char *argv[]);
 
 void rail_type_detect(GridConfig config);
 
