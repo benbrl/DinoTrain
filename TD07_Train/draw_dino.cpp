@@ -1,4 +1,5 @@
 #include "draw_dino.hpp"
+#include "GLFW/glfw3.h"
 
 void jambe()
 {
@@ -59,12 +60,19 @@ void draw_corps()
     myEngine.mvMatrixStack.popMatrix();
 
     // aile 1
+    if (flagAnim)
+    {
+        nb_ms_elapsed = glfwGetTime() * 1000.0 - nb_ms_save;
+    }
+    float time = nb_ms_elapsed / 500.0f;
+    float angle_mouv_main = sin(time) * 10.0f;
+
     myEngine.mvMatrixStack.pushMatrix();
     myEngine.mvMatrixStack.addTranslation(Vector3D(0.5, 0, -0.5));
+    myEngine.mvMatrixStack.addRotation(deg2rad(angle_mouv_main), Vector3D(0, 1, 0));
     myEngine.mvMatrixStack.addHomothety(Vector3D(3, 3, 1.5));
     myEngine.mvMatrixStack.addRotation(deg2rad(-90), Vector3D(1, 0, 0));
     myEngine.mvMatrixStack.addRotation(deg2rad(-90), Vector3D(0, 0, 1));
-
     myEngine.updateMvMatrix();
     triangle.drawShape();
     myEngine.mvMatrixStack.popMatrix();

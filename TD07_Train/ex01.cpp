@@ -48,7 +48,10 @@ float b = M_PI/12.0f;
 float cameraSpeed = 2.5f * deltaTime;
 Vector3D right = (front_vector ^ up_vector);
 
-
+// animation aile dino
+bool flagAnim = true;
+unsigned int nb_ms_elapsed = 0;
+unsigned int nb_ms_save = 0;
 
 void onKey(GLFWwindow *window, int key, int /*scancode*/, int action, int /*mods*/)
 {
@@ -98,6 +101,15 @@ void onKey(GLFWwindow *window, int key, int /*scancode*/, int action, int /*mods
 		break;
 	case GLFW_KEY_F:
 		myEngine.switchToFlatShading();
+		break;
+	case GLFW_KEY_SPACE:
+		if (is_pressed)
+		{
+			flagAnim = !flagAnim;
+			std::cout << "Animation : " << ((flagAnim) ? "ON" : "OFF") << std::endl;
+			if (flagAnim)
+				nb_ms_save = glfwGetTime() * 1000.0 - nb_ms_elapsed;
+		}
 		break;
 
 	default:
