@@ -18,7 +18,6 @@ GLBI_Set_Of_Points somePoints(3);
 GLBI_Set_Of_Points grid_pts(3);
 
 StandardMesh *ground = NULL;
-GLBI_Convex_2D_Shape ground_debug{3};
 GLBI_Convex_2D_Shape RailInt;
 GLBI_Convex_2D_Shape Rail1;
 GLBI_Convex_2D_Shape Rail2;
@@ -58,10 +57,10 @@ Vector3D x_axe{1.0f, 0.0f, 0.0f};
 void initScene()
 {
 	myEngine.switchToPhongShading();
-	myEngine.setLightIntensity(Vector3D(1, 1, 1),0);
+	myEngine.setLightIntensity(Vector3D(1, 1, 1), 0);
 	myEngine.setLightPosition(Vector4D(0.7f, -0.3f, 1.0f, 0), 0);
-	myEngine.addALight(Vector4D(5.0f, 10.0f, 4.5f, 1.0f),Vector3D(50.0f, 50.0f, 10.0f));
-	
+	myEngine.addALight(Vector4D(5.0f, 10.0f, 4.5f, 1.0f), Vector3D(50.0f, 50.0f, 10.0f));
+
 	std::vector<float> points{0.0, 0.0, 0.0};
 	somePoints.initSet(points, 1.0, 1.0, 1.0);
 
@@ -69,7 +68,6 @@ void initScene()
 								 100.0, -100.0, 0.0,
 								 100.0, 100.0, 0.0,
 								 -100.0, 100.0, 0.0};
-
 
 	ground = basicRect(100.0, 100.0);
 	ground->createVAO();
@@ -105,15 +103,7 @@ void initScene()
 	grid_pts.initSet(gridPoints, gridColor);
 	grid_pts.changeNature(GL_LINES);
 
-	// debug
-	std::vector<float> carreDebug{
-		0.0, 10.0, 0.11,
-		10.0, 10.0, 0.11,
-		10.0, 0.0, 0.11,
-		0.0, 0.0, 0.11};
 
-	ground_debug.initShape(carreDebug);
-	ground_debug.changeNature(GL_TRIANGLE_FAN);
 
 	balast = basicCylinder(1.0f, 1.0f);
 	balast->createVAO();
@@ -182,7 +172,6 @@ void initScene()
 	Rail1.initShape(railIntPoints1);
 	Rail1.changeNature(GL_TRIANGLE_STRIP);
 
-
 	// courbes du haut et du bas pour rail 2
 	std::vector<float> railIntPoints2;
 
@@ -199,7 +188,6 @@ void initScene()
 	}
 	Rail2.initShape(railIntPoints2);
 	Rail2.changeNature(GL_TRIANGLE_STRIP);
-
 
 	// courbes des côtés
 
@@ -318,9 +306,7 @@ void drawScene(GridConfig config)
 	myEngine.setFlatColor(0.435, 0.812, 0.592);
 	ground_position();
 
-	myEngine.setFlatColor(1, 0.984, 0);
-	ground_debug.drawShape();
-	myEngine.setFlatColor(0.2, 1.0, 0.8);
+
 
 	rail_type_detect(config);
 	drawGare_position(config.origin);
