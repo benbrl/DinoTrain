@@ -2,6 +2,8 @@
 
 Projet réalisé par Benoît Baraille et Jade Riesen dans le cadre du cours de synthèse d'image - IMAC E3
 
+Lien du repo Github : [lien du repo](https://github.com/benbrl/DinoTrain)
+
 # Résultat
 
 ![Résultat](assets/screenshots/result_wip.png)
@@ -67,12 +69,13 @@ Si la compilation échoue, vérifiez que les lignes **143 à 146** du fichier : 
 - Création d'un train inspiré de l'univers Dino Train.
 - Gestion de l'éclairage de la scène.
 - Modélisation d'une gare.
-- Création d'un dinosaure inspiré du _Tiny Pteranodon_ de Dino Train.
 - Ajout d'une texture d'herbe sur le terrain.
 
 ## Améliorations
 
-- Génération d'arbres avec tailles et positions aléatoires.
+- Génération d'arbres avec des tailles et des positions aléatoires.
+- Création d'un dinosaure inspiré du _Tiny Pteranodon_ de _Dino Train_, avec des pattes en forme de triangles (elles sont peu visibles, mais bien présentes).
+- Animation du bras du dinosaure.
 
 ## Changement JSON
 
@@ -101,7 +104,17 @@ Si la compilation échoue, vérifiez que les lignes **143 à 146** du fichier : 
 }
 ```
 
-Vous pouvez désormais ajouter la position du dinosaure ainsi que le nombre d’arbres souhaité.
+Vous pouvez désormais définir la position du dinosaure ainsi que le nombre d’arbres à générer.
+
+Pour cela, ajoutez les champs suivants dans le fichier JSON :
+
+```json
+  "arbres": 10,
+  "dinosaure": [1, 1, -90]
+```
+
+**arbres** : nombre d’arbres générés aléatoirement.
+**dinosaure** : position et orientation du dinosaure sous la forme `[x, y, rotation]`
 
 # Merci !
 
