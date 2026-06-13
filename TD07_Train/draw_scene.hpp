@@ -63,7 +63,6 @@ void drawGare();
 
 void drawArbre();
 
-
 void drawGare_position(Position position);
 
 unsigned char *stbi_load(const char *filename, int &x, int &y, int &n, int c);

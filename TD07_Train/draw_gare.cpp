@@ -16,10 +16,9 @@ float angle = M_PI / 6.0f;
 float hauteur_gare = 6.f;
 float largeur_gare = 4;
 float angle_toit = M_PI / 2 - angle;
-float dim_gare = largeur_gare+largeur_auvent;
+float dim_gare = largeur_gare + largeur_auvent;
 void drawEntree()
 {
-	
 
 	// pylone 1
 	myEngine.mvMatrixStack.pushMatrix();
@@ -40,7 +39,7 @@ void drawEntree()
 	myEngine.mvMatrixStack.popMatrix();
 
 	// auvent
-	
+
 	myEngine.mvMatrixStack.pushMatrix();
 	myEngine.mvMatrixStack.addTranslation(Vector3D(-hauteur_auvent - taille_pilone / 2, longeur_auvent / 2.0f, hauteur_pilone + hauteur_auvent / 2.f));
 	myEngine.mvMatrixStack.addHomothety(Vector3D(largeur_auvent, longeur_auvent, hauteur_auvent));
@@ -73,11 +72,10 @@ void drawEntree()
 
 void drawGare()
 {
-	
 
 	// murs
 	myEngine.mvMatrixStack.pushMatrix();
-	myEngine.mvMatrixStack.addTranslation(Vector3D(largeur_gare / 2.0, longeur_auvent/ 2.f, hauteur_gare / 2.f));
+	myEngine.mvMatrixStack.addTranslation(Vector3D(largeur_gare / 2.0, longeur_auvent / 2.f, hauteur_gare / 2.f));
 	myEngine.mvMatrixStack.addHomothety(Vector3D(largeur_gare, longeur_auvent, hauteur_gare));
 	myEngine.updateMvMatrix();
 	myEngine.setFlatColor(0.549, 0.353, 0.235);
@@ -85,10 +83,10 @@ void drawGare()
 	myEngine.mvMatrixStack.popMatrix();
 
 	// toit
-		
+
 	myEngine.mvMatrixStack.pushMatrix();
-	myEngine.mvMatrixStack.addTranslation(Vector3D{dim_gare,0, 0});
-	myEngine.mvMatrixStack.addRotation(M_PI/2.0f, z_axe);
+	myEngine.mvMatrixStack.addTranslation(Vector3D{dim_gare, 0, 0});
+	myEngine.mvMatrixStack.addRotation(M_PI / 2.0f, z_axe);
 	myEngine.setFlatColor(0.1, 0.13, 0.15);
 	myEngine.mvMatrixStack.pushMatrix();
 	myEngine.mvMatrixStack.pushMatrix();
@@ -106,7 +104,7 @@ void drawGare()
 	myEngine.updateMvMatrix();
 	rectangle->draw();
 	myEngine.mvMatrixStack.popMatrix();
-	
+
 	myEngine.mvMatrixStack.pushMatrix();
 	myEngine.mvMatrixStack.addTranslation(Vector3D(longeur_auvent, 0, hauteur_gare));
 	myEngine.mvMatrixStack.addHomothety(Vector3D(dim_gare, dim_gare, dim_gare));
@@ -132,9 +130,6 @@ void drawGare()
 	myEngine.updateMvMatrix();
 	drawEntree();
 	myEngine.mvMatrixStack.popMatrix();
-
-	
-
 }
 
 void drawGare_position(Position position)

@@ -119,11 +119,11 @@ void drawRailFerCourbe()
     // milieu
     myEngine.mvMatrixStack.pushMatrix();
     myEngine.mvMatrixStack.addTranslation(Vector3D(0, 0, sr));
-    myEngine.setNormalForConvex2DShape(Vector3D{-cos(1.0f),-sin(1.0f),0.0f});
+    myEngine.setNormalForConvex2DShape(Vector3D{-cos(1.0f), -sin(1.0f), 0.0f});
     myEngine.updateMvMatrix();
     courbeAvant1.drawShape();
     courbeAvant2.drawShape();
-    myEngine.setNormalForConvex2DShape(Vector3D{cos(1.0f), sin(1.0f),0.0f});
+    myEngine.setNormalForConvex2DShape(Vector3D{cos(1.0f), sin(1.0f), 0.0f});
     myEngine.updateMvMatrix();
     courbeArriere1.drawShape();
     courbeArriere2.drawShape();

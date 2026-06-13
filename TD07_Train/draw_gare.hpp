@@ -6,6 +6,5 @@
 #include "tools/basic_mesh.hpp"
 #include "utilsJson.hpp"
 
-
 void drawGare();
 void drawGare_position(Position position);

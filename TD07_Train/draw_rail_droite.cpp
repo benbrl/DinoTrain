@@ -55,7 +55,7 @@ void drawRailDroite()
 	myEngine.mvMatrixStack.pushMatrix();
 	myEngine.mvMatrixStack.addRotation(deg2rad(90), Vector3D(0.0, 0.0, 1.0));
 	// myEngine.mvMatrixStack.addTranslation(Vector3D(POS_X_RAIL1, -axe_y / 2 + sx * 2, rr));
-	myEngine.mvMatrixStack.addTranslation(Vector3D(POS_X_RAIL1, -axe_y / 2 + sx / 4, rr + sr /2));
+	myEngine.mvMatrixStack.addTranslation(Vector3D(POS_X_RAIL1, -axe_y / 2, rr + sr / 2));
 	myEngine.updateMvMatrix();
 	drawRailFer();
 	myEngine.mvMatrixStack.popMatrix();
@@ -65,7 +65,7 @@ void drawRailDroite()
 
 	myEngine.mvMatrixStack.pushMatrix();
 	myEngine.mvMatrixStack.addRotation(deg2rad(90), Vector3D(0.0, 0.0, 1.0));
-	myEngine.mvMatrixStack.addTranslation(Vector3D(POS_X_RAIL2, -axe_y / 2 + sx / 4, rr + sr /2));
+	myEngine.mvMatrixStack.addTranslation(Vector3D(POS_X_RAIL2, -axe_y / 2, rr + sr / 2));
 	myEngine.updateMvMatrix();
 	drawRailFer();
 	myEngine.mvMatrixStack.popMatrix();

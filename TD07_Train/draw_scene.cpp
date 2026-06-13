@@ -103,8 +103,6 @@ void initScene()
 	grid_pts.initSet(gridPoints, gridColor);
 	grid_pts.changeNature(GL_LINES);
 
-
-
 	balast = basicCylinder(1.0f, 1.0f);
 	balast->createVAO();
 
@@ -305,8 +303,6 @@ void drawScene(GridConfig config)
 
 	myEngine.setFlatColor(0.435, 0.812, 0.592);
 	ground_position();
-
-
 
 	rail_type_detect(config);
 	drawGare_position(config.origin);
