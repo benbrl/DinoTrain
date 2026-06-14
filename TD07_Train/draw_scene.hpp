@@ -27,8 +27,6 @@ extern const int POS_X_RAIL2;
 extern const float rayon_rail_balast;
 extern GLBI_Convex_2D_Shape RailInt;
 extern GLBI_Convex_2D_Shape carre;
-extern IndexedMesh *balast;
-extern IndexedMesh *rail;
 extern IndexedMesh *sphere;
 extern IndexedMesh *cercle;
 extern IndexedMesh *cube;

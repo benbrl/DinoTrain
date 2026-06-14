@@ -1,10 +1,8 @@
 #include "draw_scene.hpp"
 #include "utilsJson.hpp"
 
-extern IndexedMesh *rail;
-// extern GLBI_Convex_2D_Shape carre;
-extern GLBI_Convex_2D_Shape triangle;
 extern StandardMesh *rectangle;
+
 
 float taille_pilone = 1;
 float hauteur_pilone = 5;
@@ -52,7 +50,7 @@ void drawEntree()
 	float hauteur_pilone_rotation = 3.7f;
 	myEngine.mvMatrixStack.pushMatrix();
 	myEngine.mvMatrixStack.addTranslation(Vector3D(0, taille_pilone + 1.0f, hauteur_pilone - 1.0f));
-	myEngine.mvMatrixStack.addRotation(deg2rad(-45), Vector3D(1, 0, 0));
+	myEngine.mvMatrixStack.addRotation(deg2rad(-45), x_axe);
 	myEngine.mvMatrixStack.addHomothety(Vector3D(taille_pilone, taille_pilone, hauteur_pilone_rotation));
 	myEngine.setFlatColor(0.643, 0.447, 0.318);
 	myEngine.updateMvMatrix();
@@ -62,7 +60,7 @@ void drawEntree()
 	// rotation pylone 2
 	myEngine.mvMatrixStack.pushMatrix();
 	myEngine.mvMatrixStack.addTranslation(Vector3D(0, 10 - taille_pilone - 1.0f, hauteur_pilone - 1.0f));
-	myEngine.mvMatrixStack.addRotation(deg2rad(45), Vector3D(1, 0, 0));
+	myEngine.mvMatrixStack.addRotation(deg2rad(45), x_axe);
 	myEngine.mvMatrixStack.addHomothety(Vector3D(taille_pilone, taille_pilone, hauteur_pilone_rotation));
 	myEngine.setFlatColor(0.643, 0.447, 0.318);
 	myEngine.updateMvMatrix();
@@ -79,7 +77,7 @@ void drawGare()
 	myEngine.mvMatrixStack.addHomothety(Vector3D(largeur_gare, longeur_auvent, hauteur_gare));
 	myEngine.updateMvMatrix();
 	myEngine.setFlatColor(0.549, 0.353, 0.235);
-	rail->draw();
+	cube->draw();
 	myEngine.mvMatrixStack.popMatrix();
 
 	// toit
@@ -92,7 +90,7 @@ void drawGare()
 	myEngine.mvMatrixStack.pushMatrix();
 	myEngine.mvMatrixStack.addTranslation(Vector3D(0, 0, hauteur_gare));
 	myEngine.mvMatrixStack.addHomothety(Vector3D(longeur_auvent, (dim_gare / 2.0f) / cos(angle), dim_gare));
-	myEngine.mvMatrixStack.addRotation(-angle_toit, Vector3D(1, 0, 0));
+	myEngine.mvMatrixStack.addRotation(-angle_toit, x_axe);
 	myEngine.updateMvMatrix();
 	rectangle->draw();
 	myEngine.mvMatrixStack.popMatrix();
@@ -100,7 +98,7 @@ void drawGare()
 	myEngine.mvMatrixStack.pushMatrix();
 	myEngine.mvMatrixStack.addTranslation(Vector3D(0, dim_gare, hauteur_gare));
 	myEngine.mvMatrixStack.addHomothety(Vector3D(longeur_auvent, (dim_gare / 2.0f) / cos(angle), dim_gare));
-	myEngine.mvMatrixStack.addRotation(angle_toit, Vector3D(1, 0, 0));
+	myEngine.mvMatrixStack.addRotation(angle_toit, x_axe);
 	myEngine.updateMvMatrix();
 	rectangle->draw();
 	myEngine.mvMatrixStack.popMatrix();
@@ -108,8 +106,8 @@ void drawGare()
 	myEngine.mvMatrixStack.pushMatrix();
 	myEngine.mvMatrixStack.addTranslation(Vector3D(longeur_auvent, 0, hauteur_gare));
 	myEngine.mvMatrixStack.addHomothety(Vector3D(dim_gare, dim_gare, dim_gare));
-	myEngine.mvMatrixStack.addRotation(M_PI / 2.0f, Vector3D(1, 0, 0));
-	myEngine.mvMatrixStack.addRotation(M_PI / 2.0f, Vector3D(0, 1, 0));
+	myEngine.mvMatrixStack.addRotation(M_PI / 2.0f, x_axe);
+	myEngine.mvMatrixStack.addRotation(M_PI / 2.0f, y_axe);
 	myEngine.updateMvMatrix();
 	triangle.drawShape();
 	myEngine.mvMatrixStack.popMatrix();
@@ -117,8 +115,8 @@ void drawGare()
 	myEngine.mvMatrixStack.pushMatrix();
 	myEngine.mvMatrixStack.addTranslation(Vector3D(0, 0, hauteur_gare));
 	myEngine.mvMatrixStack.addHomothety(Vector3D(dim_gare, dim_gare, dim_gare));
-	myEngine.mvMatrixStack.addRotation(M_PI / 2.0f, Vector3D(1, 0, 0));
-	myEngine.mvMatrixStack.addRotation(M_PI / 2.0f, Vector3D(0, 1, 0));
+	myEngine.mvMatrixStack.addRotation(M_PI / 2.0f, x_axe);
+	myEngine.mvMatrixStack.addRotation(M_PI / 2.0f, y_axe);
 	myEngine.updateMvMatrix();
 	triangle.drawShape();
 	myEngine.mvMatrixStack.popMatrix();

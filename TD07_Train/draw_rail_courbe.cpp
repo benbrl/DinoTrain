@@ -1,11 +1,5 @@
 #include "draw_rail_courbe.hpp"
 
-extern const float sr;
-extern const float rr;
-extern const int POS_X_RAIL1;
-extern Vector3D z_axe;
-extern Vector3D y_axe;
-extern Vector3D x_axe;
 
 void drawRailCourbe()
 {
@@ -64,7 +58,7 @@ void drawRailFerCourbe()
     // Dessous
     myEngine.mvMatrixStack.pushMatrix();
     myEngine.mvMatrixStack.addTranslation(Vector3D{0.0f, 0.0f, sr});
-    myEngine.setFlatColor(0.749, 0.788, 0.82);
+	myEngine.setFlatColor(0.749, 0.788, 0.82);
     myEngine.setNormalForConvex2DShape(-z_axe);
     myEngine.updateMvMatrix();
     Rail1.drawShape();

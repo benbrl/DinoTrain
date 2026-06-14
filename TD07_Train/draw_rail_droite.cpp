@@ -1,12 +1,5 @@
 #include "draw_rail_droite.hpp"
 
-extern const float axe_y;
-extern const float sx;
-extern const float sr;
-extern const float rr;
-extern const int POS_X_RAIL1;
-extern const int POS_X_RAIL2;
-extern const float rayon_rail_balast;
 
 void drawBalast()
 {
@@ -16,7 +9,7 @@ void drawBalast()
 	myEngine.mvMatrixStack.addTranslation(Vector3D(0, 0, rayon_rail_balast * 2 + rr));
 	myEngine.updateMvMatrix();
 	myEngine.setFlatColor(0.549, 0.353, 0.235);
-	balast->draw();
+	cylindre->draw();
 
 	myEngine.mvMatrixStack.popMatrix();
 }
@@ -29,7 +22,7 @@ void drawRailFer()
 
 	myEngine.updateMvMatrix();
 	myEngine.setFlatColor(0.749, 0.788, 0.82);
-	rail->draw();
+	cube->draw();
 
 	myEngine.mvMatrixStack.popMatrix();
 }

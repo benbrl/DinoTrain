@@ -3,10 +3,6 @@
 #include <vector>
 #include <iostream>
 
-extern IndexedMesh *balast;
-extern IndexedMesh *sphere;
-extern StandardMesh *cone;
-
 struct Arbre
 {
     int x;
@@ -18,14 +14,17 @@ std::vector<Arbre> liste_arbres;
 
 void drawArbre(int taille_arbre)
 {
+    //tronc
     myEngine.mvMatrixStack.pushMatrix();
     myEngine.mvMatrixStack.addHomothety(Vector3D(1, 1, taille_arbre));
-    myEngine.mvMatrixStack.addRotation(M_PI / 2, Vector3D(1, 0, 0));
+    myEngine.mvMatrixStack.addRotation(M_PI / 2, x_axe);
     myEngine.updateMvMatrix();
     myEngine.setFlatColor(0.549, 0.353, 0.235);
-    balast->draw();
+    cylindre->draw();
+
+    //feuillage
     myEngine.mvMatrixStack.addHomothety(Vector3D(taille_arbre, 1, taille_arbre));
-    myEngine.mvMatrixStack.addTranslation(Vector3D(0, 1, 0));
+    myEngine.mvMatrixStack.addTranslation(y_axe);
     myEngine.updateMvMatrix();
     myEngine.setFlatColor(0, 0.05, 0);
     cone->draw();
@@ -39,14 +38,6 @@ void drawArbre(int taille_arbre)
     }
 
     myEngine.mvMatrixStack.popMatrix();
-
-    // myEngine.mvMatrixStack.pushMatrix();
-    // myEngine.mvMatrixStack.addTranslation(Vector3D(1,1,tronc_dim));
-    // myEngine.mvMatrixStack.addRotation(M_PI/2, Vector3D(1,0,0));
-    // myEngine.updateMvMatrix();
-    // myEngine.setFlatColor(0, 1, 0);
-    // cone->draw();
-    // myEngine.mvMatrixStack.popMatrix();
 }
 
 void liste_position_arbre(GridConfig config, int nb_arbres)
@@ -80,12 +71,6 @@ void liste_position_arbre(GridConfig config, int nb_arbres)
             arbres_places++;
         }
     }
-
-    // debug
-    // for (auto const &arbre : liste_arbres)
-    // {
-    //     std::cout << arbre.x << ", " << arbre.y << " taille  :" << arbre.taille << std::endl;
-    // }
 }
 
 void draw_position_arbre(int arbre_position_x, int arbre_position_y, int taille_arbre)

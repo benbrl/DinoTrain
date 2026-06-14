@@ -30,8 +30,6 @@ GLBI_Convex_2D_Shape courbeAvant2{3};
 GLBI_Convex_2D_Shape courbeArriere2{3};
 
 IndexedMesh *sphere = NULL;
-IndexedMesh *balast = NULL;
-IndexedMesh *rail = NULL;
 IndexedMesh *cylindre = NULL;
 StandardMesh *cone = NULL;
 StandardMesh *rectangle = NULL;
@@ -56,11 +54,15 @@ Vector3D x_axe{1.0f, 0.0f, 0.0f};
 
 void initScene()
 {
+	//lumière
 	myEngine.switchToPhongShading();
-	myEngine.setLightIntensity(Vector3D(1, 1, 1), 0);
+	//soleil
+	myEngine.setLightIntensity(Vector3D(1, 1, 1),0);
 	myEngine.setLightPosition(Vector4D(0.7f, -0.3f, 1.0f, 0), 0);
-	myEngine.addALight(Vector4D(5.0f, 10.0f, 4.5f, 1.0f), Vector3D(50.0f, 50.0f, 10.0f));
-
+	//train
+	myEngine.addALight(Vector4D(5.0f, 10.0f, 4.5f, 1.0f),Vector3D(50.0f, 50.0f, 10.0f));
+	
+	
 	std::vector<float> points{0.0, 0.0, 0.0};
 	somePoints.initSet(points, 1.0, 1.0, 1.0);
 
@@ -103,14 +105,9 @@ void initScene()
 	grid_pts.initSet(gridPoints, gridColor);
 	grid_pts.changeNature(GL_LINES);
 
-	balast = basicCylinder(1.0f, 1.0f);
-	balast->createVAO();
 
 	cylindre = basicCylinder(1.0f, 1.0f);
 	cylindre->createVAO();
-
-	rail = basicCube(1.0f);
-	rail->createVAO();
 
 	sphere = basicSphere(1.0f);
 	sphere->createVAO();
@@ -127,7 +124,6 @@ void initScene()
 	cube = basicCube(1.0f);
 	cube->createVAO();
 
-	// alors la je suis pas sur de l'initialisrtaion , dans le tp y'a ecrit c'est automatique mais ça crash chez moi donc je sais pas voila voila
 	int width{512};
 	int height{512};
 	int channels{3};
@@ -281,8 +277,8 @@ void ground_position()
 	myEngine.activateTexturing(true);
 	myTexture.attachTexture();
 	myEngine.mvMatrixStack.pushMatrix();
-	myEngine.mvMatrixStack.addRotation(deg2rad(90), Vector3D(1.0, 0.0, 0.0));
-	myEngine.mvMatrixStack.addRotation(deg2rad(90), Vector3D(0.0, 1.0, 0.0));
+	myEngine.mvMatrixStack.addRotation(deg2rad(90),x_axe);
+	myEngine.mvMatrixStack.addRotation(deg2rad(90), y_axe);
 
 	myEngine.mvMatrixStack.addTranslation(Vector3D(-50, 0, -50));
 	myEngine.setNormalForConvex2DShape(z_axe);

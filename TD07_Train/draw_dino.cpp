@@ -1,13 +1,14 @@
 #include "draw_dino.hpp"
 #include "GLFW/glfw3.h"
 
+
 void jambe()
 {
     float rayon_jambe{0.2f};
     float taille_jambe{0.85f};
 
     myEngine.mvMatrixStack.pushMatrix();
-    myEngine.mvMatrixStack.addRotation(deg2rad(90), Vector3D(1.0, 0.0, 0.0));
+    myEngine.mvMatrixStack.addRotation(deg2rad(90), x_axe);
     myEngine.mvMatrixStack.addHomothety(Vector3D(rayon_jambe, taille_jambe, rayon_jambe));
 
     myEngine.setFlatColor(0.357, 0.494, 0.235);
@@ -82,10 +83,10 @@ void draw_corps()
     myEngine.mvMatrixStack.pushMatrix();
     myEngine.mvMatrixStack.addTranslation(Vector3D(-0.5, 0, -0.5));
     myEngine.mvMatrixStack.addHomothety(Vector3D(3, 3, 1.5));
-    myEngine.mvMatrixStack.addRotation(deg2rad(-90), Vector3D(1, 0, 0));
-    myEngine.mvMatrixStack.addRotation(deg2rad(-90), Vector3D(0, 0, 1));
-    myEngine.mvMatrixStack.addRotation(deg2rad(180), Vector3D(0, 0, 1));
-    myEngine.mvMatrixStack.addTranslation(Vector3D(-1, 0, 0));
+    myEngine.mvMatrixStack.addRotation(deg2rad(-90), x_axe);
+    myEngine.mvMatrixStack.addRotation(deg2rad(-90), z_axe);
+    myEngine.mvMatrixStack.addRotation(deg2rad(180), z_axe);
+    myEngine.mvMatrixStack.addTranslation(-x_axe);
     myEngine.updateMvMatrix();
     triangle.drawShape();
     myEngine.mvMatrixStack.popMatrix();
@@ -96,7 +97,7 @@ void draw_tete()
 
     // tete
     myEngine.mvMatrixStack.pushMatrix();
-    myEngine.mvMatrixStack.addRotation(deg2rad(-20), Vector3D(1.0, 0.0, 0.0));
+    myEngine.mvMatrixStack.addRotation(deg2rad(-20), x_axe);
     myEngine.mvMatrixStack.addHomothety(Vector3D(1, 3, 1));
     myEngine.setFlatColor(0.357, 0.494, 0.235);
     myEngine.updateMvMatrix();
@@ -198,7 +199,7 @@ void draw_dino_position(GridConfig config)
     myEngine.mvMatrixStack.pushMatrix();
 
     myEngine.mvMatrixStack.addTranslation(Vector3D(x * 10, y * 10, 0));
-    myEngine.mvMatrixStack.addRotation(deg2rad(rotation), Vector3D(0.0, 0.0, 1.0));
+    myEngine.mvMatrixStack.addRotation(deg2rad(rotation), z_axe);
     myEngine.updateMvMatrix();
     draw_dino();
     myEngine.mvMatrixStack.popMatrix();
